@@ -8,7 +8,7 @@ export default function AppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Iloma </title>
+        <title> Dashboard | NC-TECH</title> 
       </Helmet>
 
       <DashboardPage />
