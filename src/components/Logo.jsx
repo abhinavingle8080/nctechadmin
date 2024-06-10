@@ -4,8 +4,8 @@ import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { Box } from '@mui/material';
 
-import icon from '../assets/iloma.svg';
-import LogoImage from '../assets/iloma.png';
+
+import LogoImage from '../assets/nctech.png';
 import useCollapseDrawer from '../hooks/useCollapseDrawer';
 
 // ----------------------------------------------------------------------
