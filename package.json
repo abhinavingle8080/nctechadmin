@@ -1,8 +1,8 @@
 {
-  "name": "@minimal/material-kit-react",
-  "author": "minimals.cc",
-  "licence": "MIT",
-  "version": "1.8.0",
+  "name": "@nctech/nctech-admin",
+  "author": "NCTech Team",
+  "description": "Admin Dashboard Developed by NCTech Team",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",

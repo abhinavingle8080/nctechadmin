@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin
 build/*
 dist/*
 public/*
@@ -7,4 +10,8 @@ public/*
 */node_modules/
 
 package-lock.json
+<<<<<<< HEAD
 yarn.lock
+=======
+yarn.lock
+>>>>>>> origin

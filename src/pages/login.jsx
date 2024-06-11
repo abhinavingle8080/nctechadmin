@@ -8,7 +8,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login | ILoma Admin </title>
+        <title> Login | Nc Tech Admin </title>
       </Helmet>
 
       <LoginView />

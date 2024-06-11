@@ -32,7 +32,7 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
       }}
       {...other}
     >
-      <img src="/assets/iloma.svg" alt="My Specific Logo" width="100%" height="100%" />
+      <img src="/assets/Logo_WhiteBG.svg" alt="My Specific Logo" width="100%" height="100%" />
     </Box>
   );
 

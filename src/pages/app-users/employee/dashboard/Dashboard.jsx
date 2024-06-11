@@ -8,7 +8,11 @@ export default function AppPage() {
   return (
     <>
       <Helmet>
+<<<<<<< HEAD
         <title> Dashboard | NC-TECH </title>
+=======
+        <title> Dashboard | Nc Tech </title>
+>>>>>>> origin
       </Helmet>
 
       <DashboardPage />
