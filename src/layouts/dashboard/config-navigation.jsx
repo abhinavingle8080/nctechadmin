@@ -17,22 +17,54 @@ const navConfig = [
     path: '/employees',         // Path for Employee section
     icon: icon('ic_user'),      // Icon for Employee section
   },
-  // Commented out sections
-  // {
-  //   title: 'Holiday',
-  //   path: '/user/holidays',
-  //   icon: icon('holiday'),
-  // },
+{
+  title: 'Students',
+  path: '/admin/students',
+  icon: icon('ic_user'),
+},
+{
+  title: 'Batches',
+  path: '/admin/teachers',
+  icon: icon('ic_user'),    
+},
+{
+  title: 'Courses',
+  path: '/admin/subjects',
+  icon: icon('ic_user'),  
+},
+{
+  title: 'Holiday',
+  path: '/admin/holidays',
+  icon: icon('holiday'),
+},
+{
+  title: 'Admission Sections',
+  path: '/admin/subjects',
+  icon: icon('ic_user'),
+},
+
+  
   // {
   //   title: 'Leave',
-  //   path: '/user/leaves',
+  //   path: '/admin/leaves',
+  //   icon: icon('ic_blog'),
+  // },
+//  {
+//     title: 'Designation',
+//     path: '/admin/designations',
+//     icon: icon('ic_blog'),
+//   },
+  // {
+  //   title: 'Notices',
+  //   path: '/admin/notices',
   //   icon: icon('ic_blog'),
   // },
   // {
-  //   title: 'Notices',
-  //   path: '/user/notices',
+  //   title: 'Teams',
+  //   path: '/admin/teams',
   //   icon: icon('ic_blog'),
   // },
+  
   // {
   //   title: 'login',
   //   path: '/login',

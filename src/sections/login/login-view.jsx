@@ -137,7 +137,7 @@ export default function LoginView() {
           }}
         >
           <Typography variant="h4" p={2}>
-            Sign in ILoma Portal
+            Sign in NCTech Portal
           </Typography>
 
           {/* <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
