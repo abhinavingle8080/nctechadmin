@@ -14,36 +14,41 @@ const navConfig = [
     path: '/admin/dashboard',
     icon: icon('dashboard'),
   },
-  {
-    title: 'Employee',
-    path: '/admin/employees',
-    icon: icon('ic_user'),
-  },
+  // {
+  //   title: 'Employee',
+  //   path: '/admin/employees',
+  //   icon: icon('ic_user'),
+  // },
 {
   title: 'Students',
   path: '/admin/students',
   icon: icon('ic_user'),
 },
-{
-  title: 'Batches',
-  path: '/admin/teachers',
-  icon: icon('ic_user'),    
-},
+// {
+//   title: 'Batches',
+//   path: '/admin/teachers',
+//   icon: icon('ic_user'),    
+// },
 {
   title: 'Courses',
-  path: '/admin/subjects',
+  path: '/admin/courses',
   icon: icon('ic_user'),  
 },
 {
-  title: 'Holiday',
-  path: '/admin/holidays',
-  icon: icon('holiday'),
-},
-{
-  title: 'Admission Sections',
-  path: '/admin/subjects',
+  title: 'Payments',
+  path: '/admin/payments',
   icon: icon('ic_user'),
 },
+// {
+//   title: 'Holiday',
+//   path: '/admin/holidays',
+//   icon: icon('holiday'),
+// },
+// {
+//   title: 'Admission Sections',
+//   path: '/admin/subjects',
+//   icon: icon('ic_user'),
+// },
 
   
   // {
