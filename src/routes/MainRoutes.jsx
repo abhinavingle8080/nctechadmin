@@ -41,6 +41,9 @@ export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const UserAccount = lazy(() => import('src/pages/app-users/admin/profile/UserAccount'));
 
+export const Student = lazy(() => import('src/pages/app-users/admin/student/Student'));
+export const Courses = lazy(() => import('src/pages/app-users/admin/courses/Courses'));
+export const Payment = lazy(() => import('src/pages/app-users/admin/payments/Payment'));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -93,7 +96,10 @@ const MainRoutes = {
         { path: 'teams/:id/view', element: <TeamOperation /> },
         { path: 'teams/:id/edit', element: <TeamOperation /> },
         { path: 'teams/add', element: <TeamOperation /> },
-        
+
+        { path: 'students' , element: <Student /> },
+        { path: 'courses' , element: <Courses/> },
+        { path: 'payments' , element: <Payment/> },
         
       ],
     }
