@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-
-=======
 .eslintignore
->>>>>>> origin
-// .eslintignore
 build/*
 dist/*
 public/*
