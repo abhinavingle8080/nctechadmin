@@ -12,6 +12,12 @@ const navConfig = [
     path: '/admin/dashboard',    // Path for dashboard
     icon: icon('dashboard'),    // Icon for dashboard
   },
+
+  {
+     title: 'Employees',
+     path: '/admin/employees',
+     icon: icon('ic_user'),
+  },
  
 {
   title: 'Students',

@@ -22,6 +22,9 @@ export default function UserTableRow({
   name,
   avatarUrl,
   email,
+  course,
+  paymentAmount,
+  date,
   designation,
   emp_start_date,
   status,
@@ -55,17 +58,12 @@ export default function UserTableRow({
             </Typography>
           </Stack>
         </TableCell>
-
-        <TableCell>{email}</TableCell>
-
-        <TableCell>{designation}</TableCell>
-
-        <TableCell align="center">{emp_start_date}</TableCell>
-
+        <TableCell>{course}</TableCell>
+        <TableCell>{paymentAmount}</TableCell>
+        <TableCell>{date}</TableCell>
         <TableCell>
           <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
         </TableCell>
-
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
             <Iconify icon="eva:more-vertical-fill" />
@@ -117,6 +115,9 @@ UserTableRow.propTypes = {
   handleClick: PropTypes.func,
   emp_start_date: PropTypes.any,
   name: PropTypes.any,
+  course: PropTypes.any,
+  paymentAmount: PropTypes.any,
+  date: PropTypes.any,
   designation: PropTypes.any,
   selected: PropTypes.any,
   status: PropTypes.string,
