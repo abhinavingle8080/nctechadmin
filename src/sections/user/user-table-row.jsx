@@ -32,6 +32,11 @@ export default function UserTableRow({
   onDelete,
   onView,
   onEdit,
+  birth_date,
+  phone_no,
+  education,
+  country_code,
+ 
 }) {
   const [open, setOpen] = useState(null);
 
@@ -58,12 +63,20 @@ export default function UserTableRow({
             </Typography>
           </Stack>
         </TableCell>
-        <TableCell>{course}</TableCell>
-        <TableCell>{paymentAmount}</TableCell>
-        <TableCell>{date}</TableCell>
+        {/* <TableCell>{email}</TableCell>
+        <TableCell>{birth_date}</TableCell>
+        <TableCell>{country_code}</TableCell> */}
+        <TableCell>{phone_no}</TableCell>
+       
         <TableCell>
           <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
         </TableCell>
+        <TableCell>{course}</TableCell>
+        <TableCell>{paymentAmount}</TableCell>
+        <TableCell>{date}</TableCell>
+      
+
+       
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
             <Iconify icon="eva:more-vertical-fill" />
@@ -115,6 +128,10 @@ UserTableRow.propTypes = {
   handleClick: PropTypes.func,
   emp_start_date: PropTypes.any,
   name: PropTypes.any,
+  birth_date:PropTypes.any,
+  country_code:PropTypes.any,
+  phone_no:PropTypes.any,
+  education:PropTypes.any,
   course: PropTypes.any,
   paymentAmount: PropTypes.any,
   date: PropTypes.any,
