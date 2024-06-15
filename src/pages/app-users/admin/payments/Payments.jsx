@@ -17,6 +17,9 @@ import {
 
 import Swal from 'sweetalert2';
 
+// apis
+import { getPaymentsApi, deletePaymentApi } from 'src/apis/admin/payment/PaymentsApis';
+
 // Components
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -28,15 +31,6 @@ import { emptyRows, applyFilter, getComparator } from '../../../../sections/user
 import UserTableHead from '../../../../sections/user/user-table-head';
 import UserTableRow from '../../../../sections/user/user-table-row';
 
-// Mock Data
-const mockPayments = [
-  { id: 1, studentName: 'Sagar Wakekar', course: 'Java', paymentAmount: 10000, date: '2022-01-01', status: 'Completed' },
-  { id: 2, studentName: 'Diksha Sapkal', course: 'Python', paymentAmount: 5000, date: '2022-02-01', status: 'Pending' },
-  { id: 3, studentName: 'Tanvi Shrivastav', course: 'React js', paymentAmount: 10000, date: '2022-01-01', status: 'Completed' },
-  { id: 4, studentName: 'Vaishnavi Misal', course: 'CoreJava', paymentAmount: 10000, date: '2022-01-01', status: 'Failed' },
-  // Add more mock data as needed
-];
-
 export default function Payments() {
   const theme = useTheme();
   const [page, setPage] = useState(0);
@@ -47,11 +41,26 @@ export default function Payments() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [count, setCount] = useState(0);
   const [payments, setPayments] = useState([]);
+  const [payload, setPayload] = useState({
+    page: 1,
+    limit: 5,
+    search: '',
+  });
 
   useEffect(() => {
-    setPayments(mockPayments);
-    setCount(mockPayments.length);
-  }, []);
+    getPayments(payload);
+  }, [payload]);
+
+  const getPayments = async (data) => {
+    getPaymentsApi(data)
+      .then((res) => {
+        setPayments(res.data.data.rows);
+        setCount(res.data.data.count);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -89,22 +98,34 @@ export default function Payments() {
   };
 
   const handleChangePage = (event, newPage) => {
+    setPayload({
+      ...payload,
+      page: newPage + 1,
+    });
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
+    setPayload({
+      ...payload,
+      limit: parseInt(event.target.value, 10),
+    });
   };
 
   const handleFilterByName = (event) => {
-    setFilterName(event.target.value);
+    setPayload({
+      ...payload,
+      page: 1,
+      search: event.target.value,
+    });
   };
 
   const dataFiltered = applyFilter({
     inputData: payments,
     comparator: getComparator(order, orderBy),
-    filterName,
+    filterName: payload.search,
   });
 
   const handleDelete = (id) => {
@@ -119,15 +140,25 @@ export default function Payments() {
       confirmButtonColor: theme.palette.success.main,
     }).then((result) => {
       if (result.isConfirmed) {
-        setPayments(payments.filter((payment) => payment.id !== id));
-        Swal.fire('Deleted!', 'Your payment has been deleted.', 'success');
+        deletePaymentApi({ payment_id: id })
+          .then((res) => {
+            if (res?.data?.success) {
+              Swal.fire('Deleted!', res?.data?.message, 'success');
+              getPayments(payload);
+            } else {
+              Swal.fire('Error!', res?.data?.message, 'error');
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelled', 'Your payment is safe :)', 'error');
       }
     });
   };
 
-  const notFound = !dataFiltered.length && !filterName;
+  const notFound = !dataFiltered.length && !payload.search;
 
   return (
     <Container>
@@ -154,7 +185,7 @@ export default function Payments() {
       <Card>
         <UserTableToolbar
           numSelected={selected.length}
-          filterName={filterName}
+          filterName={payload.search}
           onFilterName={handleFilterByName}
         />
 
@@ -172,7 +203,7 @@ export default function Payments() {
                   { id: 'studentName', label: 'Student Name' },
                   { id: 'course', label: 'Course' },
                   { id: 'paymentAmount', label: 'Payment Amount' },
-                  { id: 'date', label: 'Date', align: 'center' },
+                  { id: 'paymentDate', label: 'Payment Date', align: 'center' },
                   { id: 'status', label: 'Status' },
                   { id: 'action', label: 'Action', align: 'center' },
                 ]}
@@ -181,11 +212,11 @@ export default function Payments() {
                 {dataFiltered.map((row) => (
                   <UserTableRow
                     key={row.id}
-                    name={row.studentName}
-                    course={row.course}
-                    paymentAmount={row.paymentAmount}
-                    date={moment(row.date).format('DD/MM/YYYY')}
-                    status={row.status}
+                    name={`${row.Student.first_name} ${row.Student.last_name}`}
+                    course={`${row.Course.course_name}`}
+                    paymentAmount={row.paid_amount}
+                    date={moment(row.payment_date).format('DD/MM/YYYY')}
+                    status={row.payment_status}
                     selected={selected.indexOf(row.studentName) !== -1}
                     handleClick={(event) => handleClick(event, row.studentName)}
                     onEdit={`/admin/payments/${row.id}/edit`}
@@ -194,7 +225,7 @@ export default function Payments() {
                   />
                 ))}
 
-                <TableEmptyRows height={77} emptyRows={emptyRows(page, rowsPerPage, count)} />
+                <TableEmptyRows height={77} emptyRows={emptyRows(payload.page - 1, rowsPerPage, count)} />
 
                 {notFound && <TableNoData query={filterName} />}
               </TableBody>
@@ -203,7 +234,7 @@ export default function Payments() {
         </Scrollbar>
 
         <TablePagination
-          page={page}
+          page={payload.page - 1}
           component="div"
           count={count}
           rowsPerPage={rowsPerPage}

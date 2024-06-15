@@ -13,7 +13,7 @@ const postMethod = (url, data) => {
       'x-secret-key': SECRET_KEY,
       Authorization: `Bearer ${getAccessToken()}`,
     },
-    data
+    data,
   };
   return axios(axiosConfig);
 };
@@ -43,7 +43,7 @@ const postFormDataMethod = (url, data) => {
       'x-secret-key': SECRET_KEY,
       Authorization: `Bearer ${getAccessToken()}`,
     },
-    data
+    data,
   };
 
   return axios(axiosConfig);
@@ -59,4 +59,4 @@ const getFileResponse = (url) => {
   return axios(axiosConfig);
 };
 
-export {getMethod,  postMethod, getFileResponse, postFormDataMethod, };
+export { getMethod, postMethod, getFileResponse, postFormDataMethod };

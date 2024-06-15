@@ -1,5 +1,5 @@
-import React, { lazy,  Suspense, useEffect, } from "react";
-import { Outlet, Navigate, useNavigate, useLocation } from "react-router-dom";
+import React, { lazy, Suspense, useEffect } from 'react';
+import { Outlet, Navigate, useNavigate, useLocation } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
 
@@ -44,13 +44,16 @@ export const UserAccount = lazy(() => import('src/pages/app-users/admin/profile/
 export const Student = lazy(() => import('src/pages/app-users/admin/student/Student'));
 export const Courses = lazy(() => import('src/pages/app-users/admin/courses/Courses'));
 export const Payment = lazy(() => import('src/pages/app-users/admin/payments/Payment'));
+export const PaymentOperation = lazy(() =>
+  import('src/pages/app-users/admin/payments/PaymentOperation')
+);
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
-  path: "/admin",
+  path: '/admin',
   children: [
     {
-      path: "/admin",
+      path: '/admin',
       element: (
         <AdminAuthGuard>
           <DashboardLayout>
@@ -82,10 +85,10 @@ const MainRoutes = {
         { path: 'leaves/:id/edit', element: <LeaveOperation /> },
         { path: 'leaves/:id/view', element: <LeaveOperation /> },
 
-        {path: 'designations', element: <Designation />},
-        {path: 'designations/:id/view', element: <DesignationOperation />},
-        {path: 'designations/:id/edit', element: <DesignationOperation />},
-        {path: 'designations/add', element: <DesignationOperation />},
+        { path: 'designations', element: <Designation /> },
+        { path: 'designations/:id/view', element: <DesignationOperation /> },
+        { path: 'designations/:id/edit', element: <DesignationOperation /> },
+        { path: 'designations/add', element: <DesignationOperation /> },
 
         { path: 'notices', element: <Notice /> },
         { path: 'notices/:id/view', element: <NoticeOperation /> },
@@ -97,13 +100,15 @@ const MainRoutes = {
         { path: 'teams/:id/edit', element: <TeamOperation /> },
         { path: 'teams/add', element: <TeamOperation /> },
 
-        { path: 'students' , element: <Student /> },
-        { path: 'courses' , element: <Courses/> },
-        { path: 'payments' , element: <Payment/> },
-        
+        { path: 'students', element: <Student /> },
+        { path: 'courses', element: <Courses /> },
+        { path: 'payments', element: <Payment /> },
+        { path: 'payments/:id/view', element: <PaymentOperation /> },
+        { path: 'payments/:id/edit', element: <PaymentOperation /> },
+        { path: 'payments/add', element: <PaymentOperation/> },
       ],
-    }
-  ]
+    },
+  ],
 };
 
 // export default AppRoutes;
