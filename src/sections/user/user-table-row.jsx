@@ -15,23 +15,25 @@ import IconButton from '@mui/material/IconButton';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
 export default function UserTableRow({
   selected,
   name,
   avatarUrl,
   email,
   course,
-  paymentAmount,
+  description,
+  fees,
   date,
+  paymentAmount,
+  status,
   designation,
   emp_start_date,
-  status,
   handleClick,
   onDelete,
   onView,
   onEdit,
+  
+   
 }) {
   const [open, setOpen] = useState(null);
 
@@ -58,9 +60,9 @@ export default function UserTableRow({
             </Typography>
           </Stack>
         </TableCell>
-        <TableCell>{course}</TableCell>
-        <TableCell>{paymentAmount}</TableCell>
-        <TableCell>{date}</TableCell>
+        <TableCell>{course} {description}</TableCell>
+        <TableCell>{fees}</TableCell>
+        <TableCell>{paymentAmount} {date}</TableCell>
         <TableCell>
           <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
         </TableCell>
@@ -124,4 +126,8 @@ UserTableRow.propTypes = {
   onView: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
+  description: PropTypes.string,
+  fees: PropTypes.number.isRequired,
+
+    // Assuming these are strings, adjust as per actual data type
 };

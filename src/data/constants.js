@@ -141,5 +141,11 @@ export const DISCOUNT_PRICE_TYPE = {
     Percentage : 'Percentage',
 }
 
+export const SELECT_LEVEL = {
+    Beginner: 'beginner',
+    Intermediate: 'intermediate',
+    Advanced: 'advanced',
+  }
+  
 export const ALERTGREENCOLOR = '#1daa4d';
 export const ALERTREDCOLOR = '#e6322b';
