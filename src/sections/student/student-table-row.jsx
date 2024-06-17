@@ -15,25 +15,22 @@ import IconButton from '@mui/material/IconButton';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
-export default function UserTableRow({
+// ----------------------------------------------------------------------
+
+export default function StudentTableRow({
   selected,
   name,
   avatarUrl,
   email,
-  course,
-  description,
-  fees,
-  date,
-  paymentAmount,
+
   status,
-  designation,
-  emp_start_date,
   handleClick,
   onDelete,
   onView,
   onEdit,
-  
-   
+  country_code,
+  birth_date,
+  phone_no,
 }) {
   const [open, setOpen] = useState(null);
 
@@ -60,18 +57,13 @@ export default function UserTableRow({
             </Typography>
           </Stack>
         </TableCell>
-        <TableCell>{course} {description}</TableCell>
-        <TableCell>{fees}</TableCell>
-        <TableCell>{paymentAmount} {date}</TableCell>
+
+        <TableCell>{phone_no}</TableCell>
+
         <TableCell>
           <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
         </TableCell>
-        <TableCell>{course}</TableCell>
-        <TableCell>{paymentAmount}</TableCell>
-        <TableCell>{date}</TableCell>
-      
 
-       
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
             <Iconify icon="eva:more-vertical-fill" />
@@ -117,27 +109,17 @@ export default function UserTableRow({
   );
 }
 
-UserTableRow.propTypes = {
+StudentTableRow.propTypes = {
   avatarUrl: PropTypes.any,
   email: PropTypes.any,
   handleClick: PropTypes.func,
-  emp_start_date: PropTypes.any,
   name: PropTypes.any,
-  birth_date:PropTypes.any,
-  country_code:PropTypes.any,
-  phone_no:PropTypes.any,
-  education:PropTypes.any,
-  course: PropTypes.any,
-  paymentAmount: PropTypes.any,
-  date: PropTypes.any,
-  designation: PropTypes.any,
+  birth_date: PropTypes.any,
+  country_code: PropTypes.any,
+  phone_no: PropTypes.any,
   selected: PropTypes.any,
   status: PropTypes.string,
   onView: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
-  description: PropTypes.string,
-  fees: PropTypes.number.isRequired,
-
-    // Assuming these are strings, adjust as per actual data type
 };

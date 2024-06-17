@@ -1,10 +1,17 @@
+// React Helmet Async import should come first
+import { Helmet } from 'react-helmet-async';
+// Then import React
 import React from 'react';
-import WorkInProgress from './StudentOperation';
+// Then import local components
+import Students from './Students';
 
 function App() {
   return (
-    <div className="App">
-      <WorkInProgress />
+    <div>
+      <Helmet>
+        <title>NCTech | Students</title>
+      </Helmet>
+      <Students />
     </div>
   );
 }
