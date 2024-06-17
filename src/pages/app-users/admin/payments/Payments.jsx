@@ -23,13 +23,13 @@ import { getPaymentsApi, deletePaymentApi } from 'src/apis/admin/payment/Payment
 // Components
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-import TableNoData from '../../../../sections/user/table-no-data';
-import TableEmptyRows from '../../../../sections/user/table-empty-rows';
+import TableNoData from '../../../../sections/payments/table-no-data';
+import TableEmptyRows from '../../../../sections/payments/table-empty-rows';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import UserTableToolbar from '../../../../sections/user/user-table-toolbar';
+import UserTableToolbar from '../../../../sections/payments/payment-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../../../../sections/user/utils';
-import UserTableHead from '../../../../sections/user/user-table-head';
-import UserTableRow from '../../../../sections/user/user-table-row';
+import UserTableHead from '../../../../sections/payments/payment-table-head';
+import UserTableRow from '../../../../sections/payments/payment-table-row';
 
 export default function Payments() {
   const theme = useTheme();
@@ -203,7 +203,7 @@ export default function Payments() {
                   { id: 'studentName', label: 'Student Name' },
                   { id: 'course', label: 'Course' },
                   { id: 'paymentAmount', label: 'Payment Amount' },
-                  { id: 'paymentDate', label: 'Payment Date', align: 'center' },
+                  { id: 'paymentDate', label: 'Payment Date'},
                   { id: 'status', label: 'Status' },
                   { id: 'action', label: 'Action', align: 'center' },
                 ]}
