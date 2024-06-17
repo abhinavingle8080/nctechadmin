@@ -21,13 +21,13 @@ import Swal from 'sweetalert2';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { getCoursesApi, deleteCourseApi } from 'src/apis/admin/course/CourseApis';
-import TableNoData from '../../../../sections/user/table-no-data';
+import TableNoData from '../../../../sections/course/table-no-data';
 import TableEmptyRows from '../../../../sections/user/table-empty-rows';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import UserTableToolbar from '../../../../sections/user/user-table-toolbar';
-import { emptyRows, applyFilter, getComparator } from '../../../../sections/user/utils';
-import UserTableHead from '../../../../sections/user/user-table-head';
-import UserTableRow from '../../../../sections/user/user-table-row';
+import CourseTableToolbar from '../../../../sections/course/course-table-toolbar';
+import { emptyRows, applyFilter, getComparator } from '../../../../sections/course/utils';
+import CourseTableHead from '../../../../sections/course/course-table-head';
+import CourseTableRow from '../../../../sections/course/course-table-row';
 
 // API functions
 
@@ -186,7 +186,7 @@ export default function Courses() {
       </Stack>
 
       <Card>
-        <UserTableToolbar
+        <CourseTableToolbar
           numSelected={selected.length}
           filterName={filterName}
           onFilterName={handleFilterByName}
@@ -195,7 +195,7 @@ export default function Courses() {
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
-              <UserTableHead
+              <CourseTableHead
                 order={order}
                 orderBy={orderBy}
                 rowCount={count}
@@ -213,7 +213,7 @@ export default function Courses() {
               />
               <TableBody>
                 {dataFiltered.map((row) => (
-                  <UserTableRow
+                  <CourseTableRow
                     key={row.id}
                     name={row.course_name}
                     description={row.description}
