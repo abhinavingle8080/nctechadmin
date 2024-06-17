@@ -24,13 +24,13 @@ import { getStudentsApi, deleteStudentApi } from 'src/apis/admin/student/Student
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
-import TableNoData from '../../../../sections/user/table-no-data';
-import UserTableRow from '../../../../sections/user/user-table-row';
-import UserTableHead from '../../../../sections/user/user-table-head';
-import TableEmptyRows from '../../../../sections/user/table-empty-rows';
+import TableNoData from '../../../../sections/student/table-no-data';
+import UserTableRow from '../../../../sections/student/student-table-row';
+import UserTableHead from '../../../../sections/student/student-table-head';
+import TableEmptyRows from '../../../../sections/student/table-empty-rows';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import UserTableToolbar from '../../../../sections/user/user-table-toolbar';
-import { emptyRows, applyFilter, getComparator } from '../../../../sections/user/utils';
+import UserTableToolbar from '../../../../sections/student/student-table-toolbar';
+import { emptyRows, applyFilter, getComparator } from '../../../../sections/student/utils';
 // ----------------------------------------------------------------------
 
 export default function Students() {
