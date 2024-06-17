@@ -5,6 +5,7 @@ import moment from 'moment';
 import propTypes from 'prop-types';
 
 import { Grid } from '@mui/material';
+import label from 'src/components/label';
 
 const styles = {
   gridItem: {
@@ -40,12 +41,20 @@ function PaymentDetails({ data }) {
     //   value: data?.transaction_id ? data.transaction_id : 'N/A',
     // },
     {
+      label: 'Total Fees Amount',
+      value: data?.Course ? `Rs.${data.Course.fees}` : 'N/A',
+    },
+    {
+       label: 'Discount Amount',
+       value: data?.Course ? `Rs.${data.Course.discount_fees}` : 'N/A',
+    },
+    {
       label: 'Paid Amount',
-      value: data?.paid_amount ? `$${data.paid_amount}` : 'N/A',
+      value: data?.paid_amount ? `Rs.${data.paid_amount}` : 'N/A',
     },
     {
       label: 'Due Amount',
-      value: data?.due_amount ? `$${data.due_amount}` : 'N/A',
+      value: data?.due_amount ? `Rs.${data.due_amount}` : 'N/A',
     },
     {
       label: 'Payment Date',
@@ -59,6 +68,7 @@ function PaymentDetails({ data }) {
       label: 'Invoice Number',
       value: data?.invoice_number ? data.invoice_number : 'N/A',
     },
+   
   ];
 
   return (
