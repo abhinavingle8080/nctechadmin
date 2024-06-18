@@ -1,25 +1,23 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import { capitalCase } from 'change-case';
 
 // @mui
 import { Tab, Box, Tabs, Card, Container } from '@mui/material';
 
 // sections
-import CourseDetails from './CourseDetails'; // Adjust import path as per your project structure
-
+import CourseDetails from './CourseDetails';
 // components
 import Page from '../../../../../components/Page';
 import Iconify from '../../../../../components/iconify';
-
 // hooks
 import useSettings from '../../../../../hooks/useSettings';
 
 // ----------------------------------------------------------------------
 
 ViewCourse.propTypes = {
-  details: PropTypes.object,
-  logs: PropTypes.array,
+  details: propTypes.object,
+  logs: propTypes.array,
 };
 
 export default function ViewCourse({ details, logs }) {
@@ -31,9 +29,14 @@ export default function ViewCourse({ details, logs }) {
     {
       value: 'Course Details',
       // icon: <Iconify icon='akar-icons:info' width={20} height={20} />,
-      component: <CourseDetails course={details} />, // Pass course details as props
+      component: <CourseDetails data={details} />,
     },
-    // Add more tabs if needed
+    // Add other tabs if needed, for example:
+    // {
+    //   value: 'Course Logs',
+    //   // icon: <Iconify icon='mdi:history' width={20} height={20} />,
+    //   component: <CourseLogs data={logs} />,
+    // },
   ];
 
   return (
@@ -48,13 +51,7 @@ export default function ViewCourse({ details, logs }) {
             onChange={(e, value) => setCurrentTab(value)}
           >
             {DETAIL_TABS.map((tab) => (
-              <Tab
-                disableRipple
-                key={tab.value}
-                label={capitalCase(tab.value)}
-                value={tab.value}
-                style={{ textTransform: 'capitalize' }}
-              />
+              <Tab disableRipple key={tab.value} label={capitalCase(tab.value)} value={tab.value} style={{ textTransform: 'capitalize' }} />
             ))}
           </Tabs>
 

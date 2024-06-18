@@ -44,7 +44,12 @@ export const UserAccount = lazy(() => import('src/pages/app-users/admin/profile/
 
 export const Student = lazy(() => import('src/pages/app-users/admin/student/Student'));
 export const StudentOperation = lazy(() => import('src/pages/app-users/admin/student/StudentOperation'))
+
 export const Courses = lazy(() => import('src/pages/app-users/admin/courses/Courses'));
+export const CourseOperation = lazy(() =>
+  import('src/pages/app-users/admin/courses/CourseOperation'));
+
+
 export const Payment = lazy(() => import('src/pages/app-users/admin/payments/Payment'));
 export const PaymentOperation = lazy(() =>
   import('src/pages/app-users/admin/payments/PaymentOperation')
@@ -107,13 +112,15 @@ const MainRoutes = {
         { path: 'students/:id/edit', element: <StudentOperation/>},
         { path: 'students/add', element: <StudentOperation/>},
 
-        { path: 'courses', element: <Courses /> },
-
         { path: 'payments', element: <Payment /> },
         { path: 'payments/:id/view', element: <PaymentOperation /> },
         { path: 'payments/:id/edit', element: <PaymentOperation /> },
         { path: 'payments/add', element: <PaymentOperation/> },
-
+        
+        { path: 'courses', element: <Courses /> },
+        { path: 'courses/:id/view', element: <CourseOperation /> },
+        { path: 'courses/:id/edit', element: <CourseOperation /> },
+        { path: 'courses/add', element: <CourseOperation/> },
       ],
     },
   ],
