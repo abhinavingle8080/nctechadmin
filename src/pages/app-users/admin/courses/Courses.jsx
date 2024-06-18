@@ -21,15 +21,13 @@ import Swal from 'sweetalert2';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { getCoursesApi, deleteCourseApi } from 'src/apis/admin/course/CourseApis';
-import TableNoData from '../../../../sections/course/table-no-data';
-import TableEmptyRows from '../../../../sections/user/table-empty-rows';
-import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import CourseTableToolbar from '../../../../sections/course/course-table-toolbar';
-import { emptyRows, applyFilter, getComparator } from '../../../../sections/course/utils';
-import CourseTableHead from '../../../../sections/course/course-table-head';
-import CourseTableRow from '../../../../sections/course/course-table-row';
-
-// API functions
+import TableNoData from 'src/sections/course/table-no-data';
+import TableEmptyRows from 'src/sections/user/table-empty-rows';
+import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs';
+import CourseTableToolbar from 'src/sections/course/course-table-toolbar';
+import { emptyRows, applyFilter, getComparator } from 'src/sections/course/utils';
+import CourseTableHead from 'src/sections/course/course-table-head';
+import CourseTableRow from 'src/sections/course/course-table-row';
 
 export default function Courses() {
   const theme = useTheme();
@@ -53,22 +51,19 @@ export default function Courses() {
   }, [payload]);
 
   const getCourses = async (data) => {
-    getCoursesApi(data)
-      .then((res) => {
-        setCourses(res.data.data.rows);
-        setCount(res.data.data.count);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const res = await getCoursesApi(data);
+      setCourses(res.data.data.rows);
+      setCount(res.data.data.count);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
-    if (id !== '') {
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(id);
-    }
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(id);
   };
 
   const handleSelectAllClick = (event) => {
@@ -107,11 +102,12 @@ export default function Courses() {
   };
 
   const handleChangeRowsPerPage = (event) => {
+    const newRowsPerPage = parseInt(event.target.value, 10);
     setPage(0);
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(newRowsPerPage);
     setPayload({
       ...payload,
-      limit: parseInt(event.target.value, 10),
+      limit: newRowsPerPage,
     });
   };
 
@@ -147,13 +143,15 @@ export default function Courses() {
           .then((res) => {
             if (res?.data?.success) {
               Swal.fire('Deleted!', res?.data?.message, 'success');
-              getCourses(payload); // Refresh the course list after deletion
+              getCourses(payload);
+              setSelected([]);
             } else {
               Swal.fire('Error!', res?.data?.message, 'error');
             }
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
+            Swal.fire('Error!', 'Failed to delete the course.', 'error');
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelled', 'Your course is safe :)', 'error');

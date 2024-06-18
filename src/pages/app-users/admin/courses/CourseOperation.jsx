@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
 // @mui
@@ -6,14 +6,13 @@ import { Container } from '@mui/material';
 
 // sections
 import CourseForm from './CourseForm';
-import ViewCourse from './view/ViewCourse'; // Adjust import path as per your project structure
-
+import ViewCourse from './view/ViewCourse';
 // components
 import Page from '../../../../components/Page';
-import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-
 // hooks
 import useSettings from '../../../../hooks/useSettings';
+import { getCourseApi } from '../../../../apis/admin/course/CourseApis';
+import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 
 // ----------------------------------------------------------------------
 
@@ -41,21 +40,25 @@ export default function CourseOperation() {
     heading = `Create ${title}`;
   }
 
-  // Commented out API fetching code
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       if (isEdit || isView) {
-  //         const response = await getCourseApi({ course_id: id });
-  //         setData(response?.data?.data);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching course data:', error);
-  //     }
-  //   };
+  const getCourse = (courseId) => {
+    if (isEdit || isView) {
+      getCourseApi({ course_id: courseId })
+        .then((res) => {
+          setData(res?.data?.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
-  //   fetchData();
-  // }, [id, isEdit, isView]);
+  useEffect(
+    () => {
+      getCourse(id);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [id]
+  );
 
   return (
     <Page title={`${name} Course`}>
@@ -63,13 +66,12 @@ export default function CourseOperation() {
         <HeaderBreadcrumbs
           heading={heading}
           links={[
-            { name: 'Dashboard', href: '/admin/dashboard' },
-            { name: `${mainTitle}`, href: '/admin/courses' },
+            { name: 'Dashboard', href: '/user/dashboard' },
+            { name: `${mainTitle}`, href: '/user/courses' },
             { name: `${name} ${title}` },
           ]}
         />
 
-        {/* Displaying either ViewCourse or CourseForm based on isView */}
         {isView ? (
           <ViewCourse details={data} logs={data} />
         ) : (
