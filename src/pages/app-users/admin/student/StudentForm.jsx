@@ -40,6 +40,7 @@ export default function StudentForm({ isEdit, data }) {
   const navigate = useNavigate();
   const [selectedStatus, setSelectedStatus] = useState('Active');
   const [phoneNo, setPhoneNo] = useState('');
+  const [parentsContactNo, setParentsContactNo] = useState('');
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -60,15 +61,24 @@ export default function StudentForm({ isEdit, data }) {
         return age >= 18;
       }),
     phone_no: Yup.string()
-      .nullable()
+      .required('Phone number is required')
       .test('phone_no', 'Invalid phone number', (value) => {
         if (value === null || value === undefined) {
           return true;
-        }  
-          return /^\d{10}$/.test(value) && value.length >= 10 && value.length <= 14;
-        
+        }
+        return /^\d{10}$/.test(value) && value.length >= 10 && value.length <= 14;
+      }),
+    parents_contact_no: Yup.string()
+      .required('Parents contact number is required')
+      .test('parents_contact_no', 'Invalid contact number', (value) => {
+        if (value === null || value === undefined) {
+          return true;
+        }
+        return /^\d{10}$/.test(value) && value.length >= 10 && value.length <= 14;
       }),
     status: Yup.string().required('Status is required'),
+    education: Yup.string().required('Education is required'),
+    college: Yup.string().required('College is required'),
   });
 
   const defaultValues = useMemo(
@@ -116,6 +126,9 @@ export default function StudentForm({ isEdit, data }) {
       }
       if (data.country_code && data.phone_no) {
         setPhoneNo(`+${data.country_code} ${data.phone_no}`);
+      }
+      if (data.parents_contact_no) {
+        setParentsContactNo(data.parents_contact_no);
       }
     }
     if (!isEdit) {
@@ -168,13 +181,13 @@ export default function StudentForm({ isEdit, data }) {
     }
   };
 
-  const handlePhoneInput = (e) => {
+  const handlePhoneInput = (e, name, setFunc) => {
     const parsePhoneNumberValue = parsePhoneNumber(e || '');
     const countryCode = parsePhoneNumberValue?.countryCallingCode || null;
     const phoneNumber = parsePhoneNumberValue?.nationalNumber || null;
-    setValue('country_code', countryCode);
-    setValue('phone_no', phoneNumber);
-    setPhoneNo(`+${countryCode} ${phoneNumber}`);
+    setValue(name, phoneNumber);
+    setValue(`${name}_code`, countryCode);
+    setFunc(`+${countryCode} ${phoneNumber}`);
   };
 
   return (
@@ -190,11 +203,11 @@ export default function StudentForm({ isEdit, data }) {
                 <RHFTextField name="first_name" label="First Name" required />
                 <RHFTextField name="last_name" label="Last Name" required />
                 <RHFTextField name="email" label="Email" required />
-                <RHFTextField name="education" label="Education" />
-                <RHFTextField name="college" label="College" />
+                <RHFTextField name="education" label="Education" required />
+                <RHFTextField name="college" label="College" required />
                 <div>
                   <PhoneInput
-                    onChange={(e) => handlePhoneInput(e)}
+                    onChange={(e) => handlePhoneInput(e, 'phone_no', setPhoneNo)}
                     placeholder="Enter phone number with (+91)"
                     defaultCountry="IN"
                     value={phoneNo}
@@ -219,17 +232,24 @@ export default function StudentForm({ isEdit, data }) {
                     }}
                   />
                 </LocalizationProvider>
-                <RHFTextField
-                  name="parents_contact_no"
-                  label="Parents Contact No"
-                  type="tel"
-                />
+                <div>
+                  <PhoneInput
+                    onChange={(e) => handlePhoneInput(e, 'parents_contact_no', setParentsContactNo)}
+                    placeholder="Enter parents contact number with (+91)"
+                    defaultCountry="IN"
+                    value={parentsContactNo}
+                  />
+                  {errors.parents_contact_no && (
+                    <FormHelperText error>{errors.parents_contact_no?.message} </FormHelperText>
+                  )}
+                </div>
                 <RHFSelect
                   name="status"
                   label="Status"
                   placeholder="Status"
                   value={selectedStatus}
                   onChange={(e) => handleChange(e, 'status', setSelectedStatus)}
+                  required
                 >
                   {Object.entries(SELECT_STATUS).map(([key, value]) => (
                     <option key={key} value={value}>

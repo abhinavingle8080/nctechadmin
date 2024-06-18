@@ -37,13 +37,9 @@ function StudentDetails({ data }) {
       value: data?.birth_date ? moment(data.birth_date).format('DD/MM/YYYY') : 'N/A',
     },
     {
-      label: 'Country Code',
-      value: data?.country_code ? data.country_code : 'N/A',
-    },
-    {
       label: 'Phone Number',
-      value: data?.phone_no ? data.phone_no : 'N/A',
-    },
+      value: data?.phone_no ? `${data?.country_code}-${data?.phone_no}` : 'N/A',
+  },
     {
       label: 'Education',
       value: data?.education ? data.education : 'N/A',
@@ -54,8 +50,8 @@ function StudentDetails({ data }) {
     },
     {
       label: 'Parents Contact Number',
-      value: data?.parents_contact_no ? data.parents_contact_no : 'N/A',
-    },
+      value: data?.parents_contact_no ? `${data?.country_code}-${data?.parents_contact_no}` : 'N/A',
+  },
     {
       label: 'Profile Image',
       value: data?.profile_image ? <img src={data.profile_image} alt="Profile" /> : 'N/A',
