@@ -6,6 +6,7 @@ import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import { useMemo, useState, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 // @mui
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -25,7 +26,6 @@ import { createPaymentApi, updatePaymentApi } from '../../../../apis/admin/payme
 PaymentForm.propTypes = {
   isEdit: PropTypes.bool,
   data: PropTypes.object,
-
 };
 
 const StyledDatePicker = styled(DatePicker)(() => ({
@@ -47,14 +47,16 @@ const PAYMENT_METHOD = {
 };
 
 export default function PaymentForm({ isEdit, data }) {
+  const navigate = useNavigate(); // Define the navigate function
   const { enqueueSnackbar } = useSnackbar();
   const [dueAmount, setDueAmount] = useState(0);
   const [selectedPaymentStatus, setSelectedPaymentStatus] = useState('Pending');
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Online');
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   const PaymentSchema = Yup.object().shape({
-    student_name: Yup.string().required('Student name is required'),
-    course_name: Yup.string().required('Course name is required'),
+    student_id: Yup.string().required('Student is required'),
+    course_id: Yup.string().required('Course is required'),
     course_amount: Yup.number()
       .required('Course amount is required')
       .min(0, 'Course amount must be non-negative'),
@@ -76,8 +78,9 @@ export default function PaymentForm({ isEdit, data }) {
 
   const defaultValues = useMemo(
     () => ({
-      student_name: data?.student_name || '',
-      course_name: data?.course_name || '',
+      payment_id: data?.id,
+      student_id: data?.student_id || '',
+      course_id: data?.course_id || '',
       course_amount: data?.course_amount || '',
       due_amount: data?.due_amount || '',
       date: data?.date ? dayjs(data?.date) : null,
@@ -116,22 +119,22 @@ export default function PaymentForm({ isEdit, data }) {
   useEffect(() => {
     const calculateDueAmount = () => {
       const courseAmount = values.course_amount || 0;
-      // Assuming there's some logic to determine the paid amount, replace 0 with the actual paid amount if needed.
-      const paidAmount = 0;
+      const paidAmount = 0; 
       setDueAmount(courseAmount - paidAmount);
     };
 
     calculateDueAmount();
   }, [values.course_amount]);
 
-  const onSubmit = async () => {
+  const onSubmit = async (formValues) => {
     try {
-      const payload = { ...values, due_amount: dueAmount };
+      const payload = { ...formValues, due_amount: dueAmount };
       if (isEdit) {
         await updatePaymentApi(payload)
           .then((res) => {
             enqueueSnackbar(res?.data?.message);
             formClear();
+            navigate('/admin/payments');
           })
           .catch((err) => {
             console.error(err);
@@ -142,6 +145,7 @@ export default function PaymentForm({ isEdit, data }) {
           .then((res) => {
             enqueueSnackbar(res?.data?.message, { variant: 'success' });
             formClear();
+            navigate('/admin/payments');
           })
           .catch((err) => {
             console.error(err);
@@ -155,10 +159,31 @@ export default function PaymentForm({ isEdit, data }) {
   };
 
   const formClear = () => {
-    reset(defaultValues);
-    setSelectedPaymentStatus('Pending');
-    setSelectedPaymentMethod('Online');
+    if (isEdit) {
+      reset(defaultValues);
+      setSelectedPaymentStatus(data?.payment_status);
+      setSelectedPaymentMethod(data?.payment_method);
+    } else {
+      reset();
+      setSelectedPaymentStatus('Pending');
+      setSelectedPaymentMethod('Online');
+    }
   };
+
+  const handleCourseChanges = (e) => {
+    const course = e.target.value;
+    console.log('e', e.target.value);
+    // setSelectedCourse(e);
+    setSelectedCourse({
+      value: course.value,
+      label: course.label,
+      fees: course.fees,
+    })
+    setValue('course_id', course.value);
+    setValue('course_amount', course.fees);
+  }
+
+  console.log('selectedCourse', selectedCourse);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -182,18 +207,19 @@ export default function PaymentForm({ isEdit, data }) {
                 <CourseSelect
                   name="course_id"
                   label="Course"
-                  onChange={(e) => setValue('course_id', e.target.value)}
-                  value={values.course_id}
+                  onChange={(e) => handleCourseChanges(e)}
+                  value={selectedCourse}
                   isError={!!errors.course_id}
                   errorText={errors.course_id?.message}
                   isRequired
                 />
                 <RHFTextField name="course_amount" label="Course Amount" type="number" required />
-                <RHFTextField name="due_amount" label="Due Amount" value={dueAmount} disable />
+                <RHFTextField name="paid_amount" label="Paid Amount" type="number" required />
+                <RHFTextField name="due_amount" label="Due Amount" value={dueAmount} disabled />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <StyledDatePicker
                     label="Date"
-                    name="date"
+                    name="payment_date"
                     value={values?.date}
                     onChange={(e) => setValue('date', e)}
                     format="YYYY-MM-DD"

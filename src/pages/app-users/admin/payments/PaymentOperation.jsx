@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+
+// @mui
 import { Container } from '@mui/material';
-import PaymentForm from './PaymentForm'; // Ensure this is the correct path and has a default export
-import ViewPayment from './view/ViewPayment'; // Ensure this is the correct path and has a default export
+
+// sections
+import PaymentForm from './PaymentForm';
+import ViewPayment from './view/ViewPayment';
+// components
 import Page from '../../../../components/Page';
+// hooks
 import useSettings from '../../../../hooks/useSettings';
-import { getPaymentApi } from '../../../../apis/admin/payment/PaymentsApis'; // Ensure this is the correct path
+import { getPaymentApi } from '../../../../apis/admin/payment/PaymentsApis';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
+
+// ----------------------------------------------------------------------
 
 export default function PaymentOperation() {
   const { themeStretch } = useSettings();
@@ -37,21 +45,16 @@ export default function PaymentOperation() {
       if (isEdit || isView) {
         getPaymentApi({ payment_id: paymentId })
           .then((res) => {
-            console.log('Payment data fetched:', res?.data?.data); // Debug log
             setData(res?.data?.data);
           })
           .catch((err) => {
-            console.error('Error fetching payment data:', err); // Debug log
+            console.log(err);
           });
       }
     };
 
     getPayment(id);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
-  console.log('Rendering PaymentOperation with data:', data); // Debug log
+  }, [id, isEdit, isView]);
 
   return (
     <Page title={`${name} Payment`}>
@@ -65,11 +68,9 @@ export default function PaymentOperation() {
           ]}
         />
 
-        {isView && (
+        {isView ? (
           <ViewPayment details={data} logs={data} />
-        )}
-        
-        {!isView && (
+        ) : (
           <PaymentForm isEdit={isEdit} data={data} />
         )}
       </Container>

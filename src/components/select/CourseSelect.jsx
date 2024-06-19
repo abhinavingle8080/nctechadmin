@@ -42,6 +42,7 @@ function CourseSelect({ onChange, value, isError, ...other }) {
         const optionsData = res?.data?.data?.rows?.map((item) => ({
           value: item?.id,
           label: item?.course_name,
+          fees: item?.fees,
         }));
         if (activeData.page === 1) {
           setOptions(optionsData);
@@ -92,7 +93,7 @@ function CourseSelect({ onChange, value, isError, ...other }) {
         {...other}
       >
         {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+          <MenuItem key={option} value={option}>{value?.label ? value.label : option?.label}</MenuItem>
         ))}
       </Select>
     </StyledFormControl>
