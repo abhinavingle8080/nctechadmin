@@ -2,6 +2,8 @@ import dayjs from 'dayjs';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
+import moment from 'moment';
+
 // form
 import { useForm } from 'react-hook-form';
 import { useMemo, useState, useEffect } from 'react';
@@ -20,6 +22,7 @@ import CourseSelect from 'src/components/select/CourseSelect';
 import { FormBox, FormBottomButton } from '../../../../sections/@dashboard/user/form';
 import { RHFSelect, RHFTextField, FormProvider } from '../../../../components/hook-form';
 import { createPaymentApi, updatePaymentApi } from '../../../../apis/admin/payment/PaymentsApis';
+
 
 // ----------------------------------------------------------------------
 
@@ -83,7 +86,7 @@ export default function PaymentForm({ isEdit, data }) {
       course_id: data?.course_id || '',
       course_amount: data?.course_amount || '',
       due_amount: data?.due_amount || '',
-      date: data?.date ? dayjs(data?.date) : null,
+      date: data?.date ? dayjs(data?.date) : dayjs(moment().format('YYYY-MM-DD')),
       payment_status: data?.payment_status || 'Pending',
       payment_method: data?.payment_method || 'Online',
     }),
@@ -122,12 +125,12 @@ export default function PaymentForm({ isEdit, data }) {
   useEffect(() => {
     const calculateDueAmount = () => {
       const courseAmount = values.course_amount || 0;
-      const paidAmount = 0; 
+      const paidAmount = values.paid_amount || 0;
       setDueAmount(courseAmount - paidAmount);
     };
 
     calculateDueAmount();
-  }, [values.course_amount]);
+  }, [values.course_amount, values.paid_amount]);
 
   const onSubmit = async (formValues) => {
     try {
@@ -173,20 +176,16 @@ export default function PaymentForm({ isEdit, data }) {
     }
   };
 
-  const handleCourseChanges = (e) => {
-    const course = e.target.value;
-    console.log('e', e.target.value);
-    // setSelectedCourse(e);
+  const handleCourseChanges = (course) => {
+    console.log('Selected course:', course);
     setSelectedCourse({
       value: course.value,
       label: course.label,
       fees: course.fees,
-    })
+    });
     setValue('course_id', course.value);
     setValue('course_amount', course.fees);
-  }
-
-  console.log('selectedCourse', selectedCourse);
+  };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -210,7 +209,7 @@ export default function PaymentForm({ isEdit, data }) {
                 <CourseSelect
                   name="course_id"
                   label="Course"
-                  onChange={(e) => handleCourseChanges(e)}
+                  onChange={(course) => handleCourseChanges(course)}
                   value={selectedCourse}
                   isError={!!errors.course_id}
                   errorText={errors.course_id?.message}
@@ -218,7 +217,7 @@ export default function PaymentForm({ isEdit, data }) {
                 />
                 <RHFTextField name="course_amount" label="Course Amount" type="number" required />
                 <RHFTextField name="paid_amount" label="Paid Amount" type="number" required />
-                <RHFTextField name="due_amount" label="Due Amount" value={dueAmount} disabled />
+                <RHFTextField name="due_amount" label="Due Amount" value={dueAmount} readOnly />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <StyledDatePicker
                     label="Date"
@@ -271,6 +270,7 @@ export default function PaymentForm({ isEdit, data }) {
             </form>
 
             <FormBottomButton
+              cancelButton='/admin/payments'
               onClear={() => formClear()}
               isSubmitting={isSubmitting}
               isEdit={isEdit}

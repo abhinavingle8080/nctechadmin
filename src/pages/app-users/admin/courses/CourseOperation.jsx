@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
 // @mui
@@ -14,6 +14,7 @@ import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 
 // hooks
 import useSettings from '../../../../hooks/useSettings';
+import { getCourseApi } from '../../../../apis/admin/course/CourseApis';
 
 // ----------------------------------------------------------------------
 
@@ -41,21 +42,20 @@ export default function CourseOperation() {
     heading = `Create ${title}`;
   }
 
-  // Commented out API fetching code
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       if (isEdit || isView) {
-  //         const response = await getCourseApi({ course_id: id });
-  //         setData(response?.data?.data);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching course data:', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (isEdit || isView) {
+          const response = await getCourseApi({ course_id: id });
+          setData(response?.data?.data);
+        }
+      } catch (error) {
+        console.error('Error fetching course data:', error);
+      }
+    };
 
-  //   fetchData();
-  // }, [id, isEdit, isView]);
+    fetchData();
+  }, [id, isEdit, isView]);
 
   return (
     <Page title={`${name} Course`}>

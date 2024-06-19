@@ -97,7 +97,7 @@ export default function CourseForm({ isEdit, data }) {
       reset(defaultValues);
       if (data.status !== undefined && data.status !== null) {
         setSelectedStatus(data.status);
-     } 
+      }
     } else {
       reset(defaultValues);
     }
@@ -145,6 +145,15 @@ export default function CourseForm({ isEdit, data }) {
     }
   };
 
+  const onStarDateChange = (newValue) => {
+    setValue('start_date', newValue);
+    if (values.duration) {
+      const numDuration = parseInt(values.duration, 10);
+      const newEndDate = dayjs(newValue).add(numDuration, 'day');
+      setValue('end_date', newEndDate);
+    }
+  };
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
@@ -170,7 +179,7 @@ export default function CourseForm({ isEdit, data }) {
                     name="start_date"
                     value={values?.start_date}
                     onChange={(e) => {
-                      setValue('start_date', e);
+                        onStarDateChange(e);
                     }}
                     format="YYYY-MM-DD"
                     slotProps={{
