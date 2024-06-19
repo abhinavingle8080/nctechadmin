@@ -1,5 +1,3 @@
-// this is CourseSelect.jsx file
-
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
@@ -21,7 +19,7 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
 
 CourseSelect.propTypes = {
   onChange: PropTypes.func,
-  value: PropTypes.any,
+  value: PropTypes.object,
   isError: PropTypes.bool,
 };
 
@@ -42,7 +40,7 @@ function CourseSelect({ onChange, value, isError, ...other }) {
         const optionsData = res?.data?.data?.rows?.map((item) => ({
           value: item?.id,
           label: item?.course_name,
-          fees: item?.fees,
+          fees: item?.discount_fees,
         }));
         if (activeData.page === 1) {
           setOptions(optionsData);
@@ -84,16 +82,21 @@ function CourseSelect({ onChange, value, isError, ...other }) {
       <Select
         labelId="course-select-label"
         id="course-select"
-        label="Course"
-        onChange={onChange}
-        value={value}
+        label="Courses"
+        onChange={(e) => {
+          const selectedOption = options.find(option => option.value === e.target.value);
+          onChange(selectedOption);
+        }}
+        value={value?.value || ''}
         MenuProps={{
           onScroll: handleLoadMore,
         }}
         {...other}
       >
         {options.map((option) => (
-          <MenuItem key={option} value={option}>{value?.label ? value.label : option?.label}</MenuItem>
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
         ))}
       </Select>
     </StyledFormControl>

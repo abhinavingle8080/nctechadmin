@@ -115,6 +115,7 @@ export default function Payments() {
   };
 
   const handleFilterByName = (event) => {
+    setFilterName(event.target.value);
     setPayload({
       ...payload,
       page: 1,
@@ -158,7 +159,7 @@ export default function Payments() {
     });
   };
 
-  const notFound = !dataFiltered.length && !payload.search;
+  const notFound = !dataFiltered.length && payload.search;
 
   return (
     <Container>
