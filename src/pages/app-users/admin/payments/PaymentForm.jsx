@@ -110,6 +110,9 @@ export default function PaymentForm({ isEdit, data }) {
       reset(defaultValues);
       setSelectedPaymentStatus(data.payment_status);
       setSelectedPaymentMethod(data.payment_method);
+      setSelectedCourse(data.course_id);
+      setSelectedCourse(data.fees);
+      setSelectedCourse(data.date);
     }
     if (!isEdit) {
       reset(defaultValues);
