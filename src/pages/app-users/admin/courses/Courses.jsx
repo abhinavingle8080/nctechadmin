@@ -21,13 +21,15 @@ import Swal from 'sweetalert2';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { getCoursesApi, deleteCourseApi } from 'src/apis/admin/course/CourseApis';
-import TableNoData from 'src/sections/course/table-no-data';
-import TableEmptyRows from 'src/sections/user/table-empty-rows';
-import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs';
-import CourseTableToolbar from 'src/sections/course/course-table-toolbar';
-import { emptyRows, applyFilter, getComparator } from 'src/sections/course/utils';
-import CourseTableHead from 'src/sections/course/course-table-head';
-import CourseTableRow from 'src/sections/course/course-table-row';
+import TableNoData from '../../../../sections/course/table-no-data';
+import TableEmptyRows from '../../../../sections/user/table-empty-rows';
+import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
+import CourseTableToolbar from '../../../../sections/course/course-table-toolbar';
+import { emptyRows, applyFilter, getComparator } from '../../../../sections/course/utils';
+import CourseTableHead from '../../../../sections/course/course-table-head';
+import CourseTableRow from '../../../../sections/course/course-table-row';
+
+// API functions
 
 export default function Courses() {
   const theme = useTheme();
@@ -51,19 +53,22 @@ export default function Courses() {
   }, [payload]);
 
   const getCourses = async (data) => {
-    try {
-      const res = await getCoursesApi(data);
-      setCourses(res.data.data.rows);
-      setCount(res.data.data.count);
-    } catch (err) {
-      console.error(err);
-    }
+    getCoursesApi(data)
+      .then((res) => {
+        setCourses(res.data.data.rows);
+        setCount(res.data.data.count);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(id);
+    if (id !== '') {
+      setOrder(isAsc ? 'desc' : 'asc');
+      setOrderBy(id);
+    }
   };
 
   const handleSelectAllClick = (event) => {
@@ -102,12 +107,11 @@ export default function Courses() {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    const newRowsPerPage = parseInt(event.target.value, 10);
     setPage(0);
-    setRowsPerPage(newRowsPerPage);
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPayload({
       ...payload,
-      limit: newRowsPerPage,
+      limit: parseInt(event.target.value, 10),
     });
   };
 
@@ -143,22 +147,19 @@ export default function Courses() {
           .then((res) => {
             if (res?.data?.success) {
               Swal.fire('Deleted!', res?.data?.message, 'success');
-              getCourses(payload); // Refresh the course list
-              setSelected([]); // Clear the selection
+              getCourses(payload); // Refresh the course list after deletion
             } else {
               Swal.fire('Error!', res?.data?.message, 'error');
             }
           })
           .catch((err) => {
-            console.error(err);
-            Swal.fire('Error!', 'Failed to delete the course.', 'error');
+            console.log(err);
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelled', 'Your course is safe :)', 'error');
       }
     });
   };
-    
 
   const notFound = !dataFiltered.length && !payload.search;
 
@@ -185,66 +186,66 @@ export default function Courses() {
       </Stack>
 
       <Card>
-    <CourseTableToolbar
-      numSelected={selected.length}
-      filterName={filterName}
-      onFilterName={handleFilterByName}
-    />
+        <CourseTableToolbar
+          numSelected={selected.length}
+          filterName={filterName}
+          onFilterName={handleFilterByName}
+        />
 
-    <Scrollbar>
-      <TableContainer sx={{ overflow: 'unset' }}>
-        <Table sx={{ minWidth: 800 }}>
-          <CourseTableHead
-            order={order}
-            orderBy={orderBy}
-            rowCount={count}
-            numSelected={selected.length}
-            onRequestSort={handleSort}
-            onSelectAllClick={handleSelectAllClick}
-            headLabel={[
-              { id: 'name', label: 'Course Name' },
-              { id: 'description', label: 'Description' },
-              { id: 'fees', label: 'Fees' },
-              { id: 'date', label: 'Date', align: 'center' },
-              { id: 'status', label: 'Status' },
-              { id: 'action', label: 'Action', align: 'center' },
-            ]}
-          />
-          <TableBody>
-            {dataFiltered.map((row) => (
-              <CourseTableRow
-                key={row.id}
-                name={row.course_name}
-                description={row.description}
-                fees={row.fees}
-                date={moment(row.date).format('DD/MM/YYYY')}
-                status={row.status} // Make sure status is correctly passed here
-                selected={selected.indexOf(row.name) !== -1}
-                handleClick={(event) => handleClick(event, row.name)}
-                onEdit={`/admin/courses/${row.id}/edit`}
-                onView={`/admin/courses/${row.id}/view`}
-                onDelete={() => handleDelete(row.id)}
+        <Scrollbar>
+          <TableContainer sx={{ overflow: 'unset' }}>
+            <Table sx={{ minWidth: 800 }}>
+              <CourseTableHead
+                order={order}
+                orderBy={orderBy}
+                rowCount={count}
+                numSelected={selected.length}
+                onRequestSort={handleSort}
+                onSelectAllClick={handleSelectAllClick}
+                headLabel={[
+                  { id: 'name', label: 'Course Name' },
+                  { id: 'description', label: 'Description' },
+                  { id: 'fees', label: 'Fees' },
+                  { id: 'date', label: 'Date', align: 'center' },
+                  { id: 'status', label: 'Status' },
+                  { id: 'action', label: 'Action', align: 'center' },
+                ]}
               />
-            ))}
+              <TableBody>
+                {dataFiltered.map((row) => (
+                  <CourseTableRow
+                    key={row.id}
+                    name={row.course_name}
+                    description={row.description}
+                    fees={row.fees}
+                    date={moment(row.date).format('DD/MM/YYYY')}
+                    status={row.status}
+                    selected={selected.indexOf(row.name) !== -1}
+                    handleClick={(event) => handleClick(event, row.name)}
+                    onEdit={`/admin/courses/${row.id}/edit`}
+                    onView={`/admin/courses/${row.id}/view`}
+                    onDelete={() => handleDelete(row.id)}
+                  />
+                ))}
 
-            <TableEmptyRows height={77} emptyRows={emptyRows(page, rowsPerPage, count)} />
+                <TableEmptyRows height={77} emptyRows={emptyRows(page, rowsPerPage, count)} />
 
-            {notFound && <TableNoData query={filterName} />}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Scrollbar>
+                {notFound && <TableNoData query={filterName} />}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Scrollbar>
 
-    <TablePagination
-      page={page}
-      component="div"
-      count={count}
-      rowsPerPage={rowsPerPage}
-      onPageChange={handleChangePage}
-      rowsPerPageOptions={[5, 10, 25]}
-      onRowsPerPageChange={handleChangeRowsPerPage}
-    />
-  </Card>
-</Container>
+        <TablePagination
+          page={page}
+          component="div"
+          count={count}
+          rowsPerPage={rowsPerPage}
+          onPageChange={handleChangePage}
+          rowsPerPageOptions={[5, 10, 25]}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Card>
+    </Container>
   );
 }
