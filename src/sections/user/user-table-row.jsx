@@ -117,7 +117,6 @@ UserTableRow.propTypes = {
   avatarUrl: PropTypes.any,
   email: PropTypes.any,
   handleClick: PropTypes.func,
-  emp_start_date: PropTypes.any,
   name: PropTypes.any,
   course: PropTypes.any,
   paymentAmount: PropTypes.any,
