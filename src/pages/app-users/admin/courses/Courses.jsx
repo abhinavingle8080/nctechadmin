@@ -143,8 +143,8 @@ export default function Courses() {
           .then((res) => {
             if (res?.data?.success) {
               Swal.fire('Deleted!', res?.data?.message, 'success');
-              getCourses(payload);
-              setSelected([]);
+              getCourses(payload); // Refresh the course list
+              setSelected([]); // Clear the selection
             } else {
               Swal.fire('Error!', res?.data?.message, 'error');
             }
@@ -158,6 +158,7 @@ export default function Courses() {
       }
     });
   };
+    
 
   const notFound = !dataFiltered.length && !payload.search;
 
@@ -184,66 +185,66 @@ export default function Courses() {
       </Stack>
 
       <Card>
-        <CourseTableToolbar
-          numSelected={selected.length}
-          filterName={filterName}
-          onFilterName={handleFilterByName}
-        />
+    <CourseTableToolbar
+      numSelected={selected.length}
+      filterName={filterName}
+      onFilterName={handleFilterByName}
+    />
 
-        <Scrollbar>
-          <TableContainer sx={{ overflow: 'unset' }}>
-            <Table sx={{ minWidth: 800 }}>
-              <CourseTableHead
-                order={order}
-                orderBy={orderBy}
-                rowCount={count}
-                numSelected={selected.length}
-                onRequestSort={handleSort}
-                onSelectAllClick={handleSelectAllClick}
-                headLabel={[
-                  { id: 'name', label: 'Course Name' },
-                  { id: 'description', label: 'Description' },
-                  { id: 'fees', label: 'Fees' },
-                  { id: 'date', label: 'Date', align: 'center' },
-                  { id: 'status', label: 'Status' },
-                  { id: 'action', label: 'Action', align: 'center' },
-                ]}
+    <Scrollbar>
+      <TableContainer sx={{ overflow: 'unset' }}>
+        <Table sx={{ minWidth: 800 }}>
+          <CourseTableHead
+            order={order}
+            orderBy={orderBy}
+            rowCount={count}
+            numSelected={selected.length}
+            onRequestSort={handleSort}
+            onSelectAllClick={handleSelectAllClick}
+            headLabel={[
+              { id: 'name', label: 'Course Name' },
+              { id: 'description', label: 'Description' },
+              { id: 'fees', label: 'Fees' },
+              { id: 'date', label: 'Date', align: 'center' },
+              { id: 'status', label: 'Status' },
+              { id: 'action', label: 'Action', align: 'center' },
+            ]}
+          />
+          <TableBody>
+            {dataFiltered.map((row) => (
+              <CourseTableRow
+                key={row.id}
+                name={row.course_name}
+                description={row.description}
+                fees={row.fees}
+                date={moment(row.date).format('DD/MM/YYYY')}
+                status={row.status} // Make sure status is correctly passed here
+                selected={selected.indexOf(row.name) !== -1}
+                handleClick={(event) => handleClick(event, row.name)}
+                onEdit={`/admin/courses/${row.id}/edit`}
+                onView={`/admin/courses/${row.id}/view`}
+                onDelete={() => handleDelete(row.id)}
               />
-              <TableBody>
-                {dataFiltered.map((row) => (
-                  <CourseTableRow
-                    key={row.id}
-                    name={row.course_name}
-                    description={row.description}
-                    fees={row.fees}
-                    date={moment(row.date).format('DD/MM/YYYY')}
-                    status={row.status}
-                    selected={selected.indexOf(row.name) !== -1}
-                    handleClick={(event) => handleClick(event, row.name)}
-                    onEdit={`/admin/courses/${row.id}/edit`}
-                    onView={`/admin/courses/${row.id}/view`}
-                    onDelete={() => handleDelete(row.id)}
-                  />
-                ))}
+            ))}
 
-                <TableEmptyRows height={77} emptyRows={emptyRows(page, rowsPerPage, count)} />
+            <TableEmptyRows height={77} emptyRows={emptyRows(page, rowsPerPage, count)} />
 
-                {notFound && <TableNoData query={filterName} />}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Scrollbar>
+            {notFound && <TableNoData query={filterName} />}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Scrollbar>
 
-        <TablePagination
-          page={page}
-          component="div"
-          count={count}
-          rowsPerPage={rowsPerPage}
-          onPageChange={handleChangePage}
-          rowsPerPageOptions={[5, 10, 25]}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Card>
-    </Container>
+    <TablePagination
+      page={page}
+      component="div"
+      count={count}
+      rowsPerPage={rowsPerPage}
+      onPageChange={handleChangePage}
+      rowsPerPageOptions={[5, 10, 25]}
+      onRowsPerPageChange={handleChangeRowsPerPage}
+    />
+  </Card>
+</Container>
   );
 }

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import propTypes from 'prop-types';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { capitalCase } from 'change-case';
 
 // @mui
@@ -9,32 +9,27 @@ import { Tab, Box, Tabs, Card, Container } from '@mui/material';
 import CourseDetails from './CourseDetails';
 // components
 import Page from '../../../../../components/Page';
-import Iconify from '../../../../../components/iconify';
 // hooks
 import useSettings from '../../../../../hooks/useSettings';
 
-// ----------------------------------------------------------------------
-
 ViewCourse.propTypes = {
-  details: propTypes.object,
-  logs: propTypes.array,
+  details: PropTypes.object, // Ensure details prop is correctly defined
+  logs: PropTypes.array,
 };
 
 export default function ViewCourse({ details, logs }) {
   const { themeStretch } = useSettings();
 
-  const [currentTab, setCurrentTab] = useState('Course Details');
+  const [currentTab, setCurrentTab] = useState('Course Details'); // Initialize currentTab state
 
   const DETAIL_TABS = [
     {
       value: 'Course Details',
-      // icon: <Iconify icon='akar-icons:info' width={20} height={20} />,
-      component: <CourseDetails data={details} />,
+      component: <CourseDetails data={details} />, // Ensure details are passed to CourseDetails correctly
     },
     // Add other tabs if needed, for example:
     // {
     //   value: 'Course Logs',
-    //   // icon: <Iconify icon='mdi:history' width={20} height={20} />,
     //   component: <CourseLogs data={logs} />,
     // },
   ];
@@ -51,7 +46,13 @@ export default function ViewCourse({ details, logs }) {
             onChange={(e, value) => setCurrentTab(value)}
           >
             {DETAIL_TABS.map((tab) => (
-              <Tab disableRipple key={tab.value} label={capitalCase(tab.value)} value={tab.value} style={{ textTransform: 'capitalize' }} />
+              <Tab
+                disableRipple
+                key={tab.value}
+                label={capitalCase(tab.value)} // Capitalize tab label
+                value={tab.value}
+                style={{ textTransform: 'capitalize' }}
+              />
             ))}
           </Tabs>
 

@@ -16,54 +16,54 @@ const styles = {
 };
 
 CourseDetails.propTypes = {
-  course: PropTypes.object,
+  data: PropTypes.object,
 };
 
-function CourseDetails({ course }) {
+function CourseDetails({ data }) {
   const dummyData = [
     {
       label: 'Course Name',
-      value: course ? course.course_name : 'N/A',
+      value: data ? data.course_name : 'N/A',
     },
     {
       label: 'Description',
-      value: course ? course.description : 'N/A',
+      value: data ? data.description : 'N/A',
     },
     {
       label: 'Fees',
-      value: course ? `$${course.fees.toFixed(2)}` : 'N/A',
+      value: data ? `$${parseFloat(data.fees).toFixed(2)}` : 'N/A',
     },
     {
       label: 'Discount Fees',
-      value: course ? `$${course.discount_fees.toFixed(2)}` : 'N/A',
+      value: data ? `$${parseFloat(data.discount_fees).toFixed(2)}` : 'N/A',
     },
     {
-      label: 'Duration (hours)',
-      value: course ? `${course.duration} hours` : 'N/A',
+      label: 'Duration (days)',
+      value: data ? `${data.duration} days` : 'N/A',
     },
     {
       label: 'Start Date',
-      value: course ? moment(course.start_date).format('DD/MM/YYYY') : 'N/A',
+      value: data ? moment(data.start_date).format('DD/MM/YYYY') : 'N/A',
     },
     {
       label: 'End Date',
-      value: course ? moment(course.end_date).format('DD/MM/YYYY') : 'N/A',
+      value: data ? moment(data.end_date).format('DD/MM/YYYY') : 'N/A',
     },
     {
       label: 'Location',
-      value: course ? course.location : 'N/A',
+      value: data ? data.location : 'N/A',
     },
     {
       label: 'Max Capacity',
-      value: course ? course.max_capacity : 'N/A',
+      value: data ? data.max_capacity : 'N/A',
     },
     {
       label: 'Current Capacity',
-      value: course ? course.current_capacity : 'N/A',
+      value: data ? data.current_capacity : 'N/A',
     },
     {
       label: 'Status',
-      value: course ? course.status : 'N/A',
+      value: data ? data.status : 'N/A',
     },
   ];
 

@@ -35,9 +35,8 @@ const StyledDatePicker = styled(DatePicker)(() => ({
 
 export default function CourseForm({ isEdit, data }) {
   const navigate = useNavigate();
-  const [selectedStatus, setSelectedStatus] = useState('Active');
-
   const { enqueueSnackbar } = useSnackbar();
+  const [selectedStatus, setSelectedStatus] = useState('Active');
 
   const CourseSchema = Yup.object().shape({
     course_name: Yup.string().required('Course name is required'),
@@ -50,7 +49,7 @@ export default function CourseForm({ isEdit, data }) {
     location: Yup.string(),
     max_capacity: Yup.number().typeError('Max capacity must be a number'),
     current_capacity: Yup.number().typeError('Current capacity must be a number'),
-    status: Yup.string().oneOf(['Active', 'Inactive']).required('Status is required'),
+    status: Yup.string().oneOf(Object.values(SELECT_STATUS)).required('Status is required'),
   });
 
   const defaultValues = useMemo(
@@ -66,10 +65,9 @@ export default function CourseForm({ isEdit, data }) {
       location: data?.location || '',
       max_capacity: data?.max_capacity || '',
       current_capacity: data?.current_capacity || '',
-      status: !isEdit ? selectedStatus : data?.status || '',
+      status: data?.status || selectedStatus,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data]
+    [data, selectedStatus]
   );
 
   const handleChange = (e, name, state) => {
@@ -98,12 +96,10 @@ export default function CourseForm({ isEdit, data }) {
       if (data.status !== undefined && data.status !== null) {
         setSelectedStatus(data.status);
       }
-    }
-    if (!isEdit) {
+    } else {
       reset(defaultValues);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEdit, data]);
+  }, [isEdit, data, defaultValues, reset]);
 
   const onSubmit = async () => {
     try {
@@ -206,7 +202,6 @@ export default function CourseForm({ isEdit, data }) {
                 <RHFSelect
                   name="status"
                   label="Status"
-                  placeholder="Status"
                   value={selectedStatus}
                   onChange={(e) => handleChange(e, 'status', setSelectedStatus)}
                 >
