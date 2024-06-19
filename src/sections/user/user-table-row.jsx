@@ -26,14 +26,10 @@ export default function UserTableRow({
   date,
   paymentAmount,
   status,
-  designation,
-  emp_start_date,
   handleClick,
   onDelete,
   onView,
   onEdit,
-  
-   
 }) {
   const [open, setOpen] = useState(null);
 
@@ -126,7 +122,6 @@ UserTableRow.propTypes = {
   course: PropTypes.any,
   paymentAmount: PropTypes.any,
   date: PropTypes.any,
-  designation: PropTypes.any,
   selected: PropTypes.any,
   status: PropTypes.string,
   onView: PropTypes.func,
