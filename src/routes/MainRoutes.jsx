@@ -8,7 +8,6 @@ import AdminAuthGuard from '../guards/AdminAuthGuard';
 // config
 import { PATH_AFTER_LOGIN } from '../config';
 
-
 // Admin Pages
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const Dashboard = lazy(() => import('src/pages/app-users/admin/dashboard/Dashboard'));
@@ -43,13 +42,7 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const UserAccount = lazy(() => import('src/pages/app-users/admin/profile/UserAccount'));
 
 export const Student = lazy(() => import('src/pages/app-users/admin/student/Student'));
-export const StudentOperation = lazy(() => import('src/pages/app-users/admin/student/StudentOperation'))
-
 export const Courses = lazy(() => import('src/pages/app-users/admin/courses/Courses'));
-export const CourseOperation = lazy(() =>
-  import('src/pages/app-users/admin/courses/CourseOperation'));
-
-
 export const Payment = lazy(() => import('src/pages/app-users/admin/payments/Payment'));
 export const PaymentOperation = lazy(() =>
   import('src/pages/app-users/admin/payments/PaymentOperation')
@@ -108,19 +101,11 @@ const MainRoutes = {
         { path: 'teams/add', element: <TeamOperation /> },
 
         { path: 'students', element: <Student /> },
-        { path: 'students/:id/view', element: <StudentOperation/>},
-        { path: 'students/:id/edit', element: <StudentOperation/>},
-        { path: 'students/add', element: <StudentOperation/>},
-
+        { path: 'courses', element: <Courses /> },
         { path: 'payments', element: <Payment /> },
         { path: 'payments/:id/view', element: <PaymentOperation /> },
         { path: 'payments/:id/edit', element: <PaymentOperation /> },
         { path: 'payments/add', element: <PaymentOperation/> },
-        
-        { path: 'courses', element: <Courses /> },
-        { path: 'courses/:id/view', element: <CourseOperation /> },
-        { path: 'courses/:id/edit', element: <CourseOperation /> },
-        { path: 'courses/add', element: <CourseOperation/> },
       ],
     },
   ],

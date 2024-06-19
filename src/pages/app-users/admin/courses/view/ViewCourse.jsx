@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { capitalCase } from 'change-case';
 
@@ -6,32 +6,34 @@ import { capitalCase } from 'change-case';
 import { Tab, Box, Tabs, Card, Container } from '@mui/material';
 
 // sections
-import CourseDetails from './CourseDetails';
+import CourseDetails from './CourseDetails'; // Adjust import path as per your project structure
+
 // components
 import Page from '../../../../../components/Page';
+import Iconify from '../../../../../components/iconify';
+
 // hooks
 import useSettings from '../../../../../hooks/useSettings';
 
+// ----------------------------------------------------------------------
+
 ViewCourse.propTypes = {
-  details: PropTypes.object, // Ensure details prop is correctly defined
+  details: PropTypes.object,
   logs: PropTypes.array,
 };
 
 export default function ViewCourse({ details, logs }) {
   const { themeStretch } = useSettings();
 
-  const [currentTab, setCurrentTab] = useState('Course Details'); // Initialize currentTab state
+  const [currentTab, setCurrentTab] = useState('Course Details');
 
   const DETAIL_TABS = [
     {
       value: 'Course Details',
-      component: <CourseDetails data={details} />, // Ensure details are passed to CourseDetails correctly
+      // icon: <Iconify icon='akar-icons:info' width={20} height={20} />,
+      component: <CourseDetails course={details} />, // Pass course details as props
     },
-    // Add other tabs if needed, for example:
-    // {
-    //   value: 'Course Logs',
-    //   component: <CourseLogs data={logs} />,
-    // },
+    // Add more tabs if needed
   ];
 
   return (
@@ -49,7 +51,7 @@ export default function ViewCourse({ details, logs }) {
               <Tab
                 disableRipple
                 key={tab.value}
-                label={capitalCase(tab.value)} // Capitalize tab label
+                label={capitalCase(tab.value)}
                 value={tab.value}
                 style={{ textTransform: 'capitalize' }}
               />
