@@ -167,7 +167,7 @@ export default function Payments() {
         <HeaderBreadcrumbs
           heading="Payments"
           links={[
-            { name: 'Dashboard', href: '/admin/dashboard'},
+            { name: 'Dashboard', href: '/admin/dashboard' },
             { name: 'Payment', href: '/admin/payments' },
             { name: 'Payment List' },
           ]}
@@ -204,7 +204,7 @@ export default function Payments() {
                   { id: 'studentName', label: 'Student Name' },
                   { id: 'course', label: 'Course' },
                   { id: 'paymentAmount', label: 'Payment Amount' },
-                  { id: 'paymentDate', label: 'Payment Date'},
+                  { id: 'paymentDate', label: 'Payment Date' },
                   { id: 'status', label: 'Status' },
                   { id: 'action', label: 'Action', align: 'center' },
                 ]}
@@ -226,7 +226,10 @@ export default function Payments() {
                   />
                 ))}
 
-                <TableEmptyRows height={77} emptyRows={emptyRows(payload.page - 1, rowsPerPage, count)} />
+                <TableEmptyRows
+                  height={77}
+                  emptyRows={emptyRows(payload.page - 1, rowsPerPage, count)}
+                />
 
                 {notFound && <TableNoData query={filterName} />}
               </TableBody>

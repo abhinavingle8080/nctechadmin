@@ -25,6 +25,10 @@ PaymentDetails.propTypes = {
 function PaymentDetails({ data }) {
   const dummyData = [
     {
+      label: 'Invoice Number',
+      value: data?.invoice_number ? data.invoice_number : 'N/A',
+    },
+    {
       label: 'Student Name',
       value: data?.Student ? `${data.Student.first_name} ${data.Student.last_name}` : 'N/A',
     },
@@ -63,10 +67,6 @@ function PaymentDetails({ data }) {
     {
       label: 'Payment Status',
       value: data?.payment_status ? data.payment_status : 'N/A',
-    },
-    {
-      label: 'Invoice Number',
-      value: data?.invoice_number ? data.invoice_number : 'N/A',
     },
    
   ];
