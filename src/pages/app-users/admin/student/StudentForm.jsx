@@ -17,11 +17,13 @@ import { Card, Grid, styled, Typography, FormHelperText } from '@mui/material';
 
 // components
 import '../../../../assets/css/PhoneInput.css';
-import DesignationSelect from 'src/components/select/DesignationSelect';
+import CourseSelect from 'src/components/select/CourseSelect'; // Import CourseSelect component
+
 import { FormBox, FormBottomButton } from '../../../../sections/@dashboard/user/form';
 import { RHFSelect, FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { createStudentApi, updateStudentApi } from '../../../../apis/admin/student/StudentApis';
 import { SELECT_STATUS } from '../../../../data/constants';
+
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +31,7 @@ StudentForm.propTypes = {
   isEdit: PropTypes.bool,
   data: PropTypes.object,
 };
+
 
 const StyledDatePicker = styled(DatePicker)(() => ({
   '& .MuiInputLabel-asterisk': {
@@ -43,6 +46,7 @@ export default function StudentForm({ isEdit, data }) {
   const [parentsContactNo, setParentsContactNo] = useState('');
 
   const { enqueueSnackbar } = useSnackbar();
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   const StudentSchema = Yup.object().shape({
     first_name: Yup.string().required('First name is required'),
@@ -79,6 +83,7 @@ export default function StudentForm({ isEdit, data }) {
     status: Yup.string().required('Status is required'),
     education: Yup.string().required('Education is required'),
     college: Yup.string().required('College is required'),
+    course_id: Yup.string().required('Course is required'), // Add course_id validation
   });
 
   const defaultValues = useMemo(
@@ -94,6 +99,7 @@ export default function StudentForm({ isEdit, data }) {
       college: data?.college || '',
       parents_contact_no: data?.parents_contact_no || '',
       status: !isEdit ? selectedStatus : data?.status || '',
+      course_id: data?.course_id || '', // Initialize course_id from data if available
     }),
     [data, isEdit, selectedStatus]
   );
@@ -190,6 +196,13 @@ export default function StudentForm({ isEdit, data }) {
     setFunc(`+${countryCode} ${phoneNumber}`);
   };
 
+  const handleCourseChanges = (course) => {
+    console.log('Selected course:', course);
+    setSelectedCourse(course);
+    setValue('course_id', course.value);
+  };
+  
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
@@ -240,16 +253,16 @@ export default function StudentForm({ isEdit, data }) {
                     value={parentsContactNo}
                   />
                   {errors.parents_contact_no && (
-                    <FormHelperText error>{errors.parents_contact_no?.message} </FormHelperText>
+                    <FormHelperText error>
+                      {errors.parents_contact_no?.message}{' '}
+                    </FormHelperText>
                   )}
                 </div>
                 <RHFSelect
                   name="status"
                   label="Status"
-                  placeholder="Status"
                   value={selectedStatus}
                   onChange={(e) => handleChange(e, 'status', setSelectedStatus)}
-                  required
                 >
                   {Object.entries(SELECT_STATUS).map(([key, value]) => (
                     <option key={key} value={value}>
@@ -257,15 +270,22 @@ export default function StudentForm({ isEdit, data }) {
                     </option>
                   ))}
                 </RHFSelect>
+                <CourseSelect
+                  name="course_id"
+                  label="Course"
+                  onChange={(course) => handleCourseChanges(course)}
+                  value={selectedCourse}
+                  isError={!!errors.course_id}
+                  errorText={errors.course_id?.message}
+                  isRequired
+                />
               </FormBox>
+              <FormBottomButton
+                reset={formClear}
+                onSubmit={handleSubmit(onSubmit)}
+                disabled={isSubmitting}
+              />
             </form>
-
-            <FormBottomButton
-              cancelButton="/admin/students"
-              onClear={() => formClear()}
-              isSubmitting={isSubmitting}
-              isEdit={isEdit}
-            />
           </Card>
         </Grid>
       </Grid>

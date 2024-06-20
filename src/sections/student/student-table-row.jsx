@@ -22,6 +22,7 @@ export default function StudentTableRow({
   name,
   avatarUrl,
   email,
+  course,
 
   status,
   handleClick,
@@ -57,6 +58,7 @@ export default function StudentTableRow({
             </Typography>
           </Stack>
         </TableCell>
+        <TableCell>{course}</TableCell>
 
         <TableCell>{phone_no}</TableCell>
 
@@ -122,4 +124,5 @@ StudentTableRow.propTypes = {
   onView: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
+  course: PropTypes.any
 };

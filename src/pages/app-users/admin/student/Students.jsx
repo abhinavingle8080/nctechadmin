@@ -211,6 +211,7 @@ export default function Students() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Student Name' },
+                  { id: 'course_id', label: 'Course Name'},
                   { id: 'phone_no', label: 'Phone No' }, // Updated label
                   { id: 'status', label: 'Status' },
                   { id: 'action', label: 'Action', align: 'center' },
