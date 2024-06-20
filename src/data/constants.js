@@ -3,6 +3,11 @@ export const SELECT_STATUS = {
     Inactive: 'Inactive',
 };
 
+export const SELECT_TYPE = {
+    Online: 'Online',
+    Offline: 'Offline',
+};
+
 export const SELECT_EMPLOYMENT_STATUS = {
     Permanent: 'Permanent',
     Contract: 'Contract',

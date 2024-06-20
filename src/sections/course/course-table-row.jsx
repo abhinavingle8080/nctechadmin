@@ -26,6 +26,7 @@ export default function UserTableRow({
   date,
   paymentAmount,
   status,
+  type,
   designation,
   emp_start_date,
   handleClick,
@@ -65,6 +66,9 @@ export default function UserTableRow({
         <TableCell>{paymentAmount} {date}</TableCell>
         <TableCell>
           <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
+        </TableCell>
+        <TableCell>
+          <Label color={(type === 'offline' && 'error') || 'success'}>{type}</Label>
         </TableCell>
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
@@ -123,6 +127,7 @@ UserTableRow.propTypes = {
   designation: PropTypes.any,
   selected: PropTypes.any,
   status: PropTypes.string,
+  type: PropTypes.string,
   onView: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,

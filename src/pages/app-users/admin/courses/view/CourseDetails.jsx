@@ -65,6 +65,10 @@ function CourseDetails({ course }) {
       label: 'Status',
       value: course.status ? course.status : 'N/A',
     },
+    {
+      label: 'Type',
+      value: data ? data.type: 'N/A',
+    },
   ];
 
   return (
