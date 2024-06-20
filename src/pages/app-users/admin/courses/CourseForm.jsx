@@ -18,7 +18,7 @@ import { Card, Grid, styled, Typography, FormHelperText } from '@mui/material';
 import { FormBox, FormBottomButton } from '../../../../sections/@dashboard/user/form';
 import { RHFSelect, FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { createCourseApi, updateCourseApi } from '../../../../apis/admin/course/CourseApis';
-import { SELECT_STATUS } from '../../../../data/constants';
+import {SELECT_TYPE , SELECT_STATUS} from '../../../../data/constants';
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +37,7 @@ export default function CourseForm({ isEdit, data }) {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [selectedStatus, setSelectedStatus] = useState('Active');
+  const [selectedType, setSelectedType] = useState('online');
 
   const CourseSchema = Yup.object().shape({
     course_name: Yup.string().required('Course name is required'),
@@ -50,6 +51,7 @@ export default function CourseForm({ isEdit, data }) {
     max_capacity: Yup.number().typeError('Max capacity must be a number'),
     current_capacity: Yup.number().typeError('Current capacity must be a number'),
     status: Yup.string().oneOf(Object.values(SELECT_STATUS)).required('Status is required'),
+    type: Yup.string().oneOf(Object.values(SELECT_TYPE)).required('Type is required'),
   });
 
   const defaultValues = useMemo(
@@ -66,8 +68,9 @@ export default function CourseForm({ isEdit, data }) {
       max_capacity: data?.max_capacity || '',
       current_capacity: data?.current_capacity || '',
       status: data?.status || selectedStatus,
+      type: data?.type || selectedType,
     }),
-    [data, selectedStatus]
+    [data, selectedStatus, selectedType]
   );
 
   const handleChange = (e, name, state) => {
@@ -95,6 +98,9 @@ export default function CourseForm({ isEdit, data }) {
       reset(defaultValues);
       if (data.status !== undefined && data.status !== null) {
         setSelectedStatus(data.status);
+      }
+      if (data.type !== undefined && data.type !== null) {
+        setSelectedType(data.type);
       }
     } else {
       reset(defaultValues);
@@ -136,9 +142,11 @@ export default function CourseForm({ isEdit, data }) {
     if (isEdit) {
       reset(defaultValues);
       setSelectedStatus(data?.status);
+      setSelectedType(data?.type);
     } else {
       reset();
       setSelectedStatus('Active');
+      setSelectedType('online');
     }
   };
 
@@ -206,6 +214,19 @@ export default function CourseForm({ isEdit, data }) {
                   onChange={(e) => handleChange(e, 'status', setSelectedStatus)}
                 >
                   {Object.entries(SELECT_STATUS).map(([key, value]) => (
+                    <option key={key} value={value}>
+                      {key}
+                    </option>
+                  ))}
+                </RHFSelect>
+
+                <RHFSelect
+                  name="type"
+                  label="Type"
+                  value={selectedType}
+                  onChange={(e) => handleChange(e, 'type', setSelectedType)}
+                >
+                  {Object.entries(SELECT_TYPE).map(([key, value]) => (
                     <option key={key} value={value}>
                       {key}
                     </option>

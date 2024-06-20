@@ -33,7 +33,7 @@ export default function CourseTableToolbar({ numSelected, filterName, onFilterNa
         <OutlinedInput
           value={filterName}
           onChange={onFilterName}
-          placeholder="Search course..."
+          placeholder="Search employee..."
           startAdornment={
             <InputAdornment position="start">
               <Iconify
