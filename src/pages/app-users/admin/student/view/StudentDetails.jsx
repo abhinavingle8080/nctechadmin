@@ -69,6 +69,10 @@ function StudentDetails({ data }) {
       value: data?.status ? data.status : 'N/A',
     },
     {
+      label: 'Course',
+      value: data?.Course ? data.Course.course_name : 'N/A',
+    },
+    {
       label: 'Created At',
       value: data?.created_at ? moment(data.created_at).format('DD/MM/YYYY') : 'N/A',
     },
