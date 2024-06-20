@@ -15,7 +15,7 @@ import IconButton from '@mui/material/IconButton';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
-export default function CourseTableRow({
+export default function UserTableRow({
   selected,
   name,
   avatarUrl,
@@ -115,7 +115,7 @@ export default function CourseTableRow({
   );
 }
 
-CourseTableRow.propTypes = {
+UserTableRow.propTypes = {
   avatarUrl: PropTypes.any,
   email: PropTypes.any,
   handleClick: PropTypes.func,

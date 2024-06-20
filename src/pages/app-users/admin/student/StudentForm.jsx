@@ -186,7 +186,7 @@ export default function StudentForm({ isEdit, data }) {
     const countryCode = parsePhoneNumberValue?.countryCallingCode || null;
     const phoneNumber = parsePhoneNumberValue?.nationalNumber || null;
     setValue(name, phoneNumber);
-    setValue(`${name}_code`, countryCode);
+    setValue(`country_code`, countryCode);
     setFunc(`+${countryCode} ${phoneNumber}`);
   };
 

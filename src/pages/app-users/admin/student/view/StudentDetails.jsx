@@ -38,7 +38,7 @@ function StudentDetails({ data }) {
     },
     {
       label: 'Phone Number',
-      value: data?.phone_no ? `${data?.country_code}-${data?.phone_no}` : 'N/A',
+      value: data?.phone_no ? `${data?.country_code} ${data?.phone_no}` : 'N/A',
   },
     {
       label: 'Education',
@@ -50,7 +50,7 @@ function StudentDetails({ data }) {
     },
     {
       label: 'Parents Contact Number',
-      value: data?.parents_contact_no ? `${data?.country_code}-${data?.parents_contact_no}` : 'N/A',
+      value: data?.parents_contact_no ? `${data?.country_code} ${data?.parents_contact_no}` : 'N/A',
   },
     {
       label: 'Profile Image',

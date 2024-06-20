@@ -35,7 +35,6 @@ const StyledDatePicker = styled(DatePicker)(() => ({
 
 export default function CourseForm({ isEdit, data }) {
   const navigate = useNavigate();
-  const { enqueueSnackbar } = useSnackbar();
   const [selectedStatus, setSelectedStatus] = useState('Active');
   const [selectedType, setSelectedType] = useState('online');
 
@@ -105,6 +104,7 @@ export default function CourseForm({ isEdit, data }) {
     } else {
       reset(defaultValues);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, data, defaultValues, reset]);
 
   const onSubmit = async () => {
@@ -175,7 +175,7 @@ export default function CourseForm({ isEdit, data }) {
                     name="start_date"
                     value={values?.start_date}
                     onChange={(e) => {
-                      setValue('start_date', e);
+                        onStarDateChange(e);
                     }}
                     format="YYYY-MM-DD"
                     slotProps={{

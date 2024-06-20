@@ -64,8 +64,10 @@ export default function Courses() {
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(id);
+    if (id !== '') {
+      setOrder(isAsc ? 'desc' : 'asc');
+      setOrderBy(id);
+    }
   };
 
   const handleSelectAllClick = (event) => {
@@ -106,8 +108,10 @@ export default function Courses() {
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPayload({
       ...payload,
+      limit: parseInt(event.target.value, 10),
       limit: parseInt(event.target.value, 10),
     });
   };
@@ -188,6 +192,11 @@ export default function Courses() {
           filterName={filterName}
           onFilterName={handleFilterByName}
         />
+        <CourseTableToolbar
+          numSelected={selected.length}
+          filterName={filterName}
+          onFilterName={handleFilterByName}
+        />
 
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
@@ -228,7 +237,13 @@ export default function Courses() {
                 ))}
 
                 <TableEmptyRows height={77} emptyRows={emptyRows(page, rowsPerPage, count)} />
+                <TableEmptyRows height={77} emptyRows={emptyRows(page, rowsPerPage, count)} />
 
+                {notFound && <TableNoData query={filterName} />}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Scrollbar>
                 {notFound && <TableNoData query={filterName} />}
               </TableBody>
             </Table>

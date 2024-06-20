@@ -1,5 +1,3 @@
-// ViewStudent.jsx
-
 import { useState } from 'react';
 import propTypes from 'prop-types';
 import { capitalCase } from 'change-case';

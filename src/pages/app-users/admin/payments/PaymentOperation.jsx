@@ -57,7 +57,7 @@ export default function PaymentOperation() {
   }, [id, isEdit, isView]);
 
   return (
-    <Page title={`${name} Payment`}>
+    <Page title={`${name} ${title}`}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={heading}

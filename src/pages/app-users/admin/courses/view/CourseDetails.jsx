@@ -16,54 +16,54 @@ const styles = {
 };
 
 CourseDetails.propTypes = {
-  data: PropTypes.object,
+  course: PropTypes.object,
 };
 
-function CourseDetails({ data }) {
+function CourseDetails({ course }) {
   const dummyData = [
     {
       label: 'Course Name',
-      value: data ? data.course_name : 'N/A',
+      value: course.course_name ? course.course_name : 'N/A',
     },
     {
       label: 'Description',
-      value: data ? data.description : 'N/A',
+      value: course.description ? course.description : 'N/A',
     },
     {
       label: 'Fees',
-      value: data ? `$${parseFloat(data.fees).toFixed(2)}` : 'N/A',
+      value: course.fees ? `$${parseInt(course.fees, 10).toFixed(2)}` : 'N/A',
     },
     {
       label: 'Discount Fees',
-      value: data ? `$${parseFloat(data.discount_fees).toFixed(2)}` : 'N/A',
+      value: course?.discount_fees ? `$${parseInt(course?.discount_fees, 10)?.toFixed(2)}` : 'N/A',
     },
     {
-      label: 'Duration (days)',
-      value: data ? `${data.duration} days` : 'N/A',
+      label: 'Duration (hours)',
+      value: course.duration ? `${course.duration} hours` : 'N/A',
     },
     {
       label: 'Start Date',
-      value: data ? moment(data.start_date).format('DD/MM/YYYY') : 'N/A',
+      value: course.start_date ? moment(course.start_date).format('DD/MM/YYYY') : 'N/A',
     },
     {
       label: 'End Date',
-      value: data ? moment(data.end_date).format('DD/MM/YYYY') : 'N/A',
+      value: course.end_date ? moment(course.end_date).format('DD/MM/YYYY') : 'N/A',
     },
     {
       label: 'Location',
-      value: data ? data.location : 'N/A',
+      value: course.location ? course.location : 'N/A',
     },
     {
       label: 'Max Capacity',
-      value: data ? data.max_capacity : 'N/A',
+      value: course.max_capacity ? course.max_capacity : 'N/A',
     },
     {
       label: 'Current Capacity',
-      value: data ? data.current_capacity : 'N/A',
+      value: course.current_capacity ? course.current_capacity : 'N/A',
     },
     {
       label: 'Status',
-      value: data ? data.status : 'N/A',
+      value: course.status ? course.status : 'N/A',
     },
     {
       label: 'Type',
