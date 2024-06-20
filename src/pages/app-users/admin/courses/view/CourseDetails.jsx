@@ -58,16 +58,12 @@ function CourseDetails({ course }) {
       value: course.max_capacity ? course.max_capacity : 'N/A',
     },
     {
-      label: 'Current Capacity',
-      value: course.current_capacity ? course.current_capacity : 'N/A',
-    },
-    {
       label: 'Status',
       value: course.status ? course.status : 'N/A',
     },
     {
       label: 'Type',
-      value: data ? data.type: 'N/A',
+      value: course ? course.type: 'N/A',
     },
   ];
 

@@ -2,42 +2,42 @@ import dayjs from 'dayjs';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-// form
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useMemo, useState, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-// @mui
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { Card, Grid, styled, Typography, FormHelperText } from '@mui/material';
+import { Card, Grid, styled, Typography } from '@mui/material';
 
-// components
+// Components
 import { FormBox, FormBottomButton } from '../../../../sections/@dashboard/user/form';
 import { RHFSelect, FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { createCourseApi, updateCourseApi } from '../../../../apis/admin/course/CourseApis';
-import {SELECT_TYPE , SELECT_STATUS} from '../../../../data/constants';
+import { SELECT_TYPE, SELECT_STATUS } from '../../../../data/constants';
 
-// ----------------------------------------------------------------------
-
+// PropTypes
 CourseForm.propTypes = {
   isEdit: PropTypes.bool,
   data: PropTypes.object,
 };
 
+// Styled component for MUI DatePicker
 const StyledDatePicker = styled(DatePicker)(() => ({
   '& .MuiInputLabel-asterisk': {
     color: 'red',
   },
 }));
 
+// CourseForm Component
 export default function CourseForm({ isEdit, data }) {
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const [selectedStatus, setSelectedStatus] = useState('Active');
-  const [selectedType, setSelectedType] = useState('online');
+  const [selectedType, setSelectedType] = useState('Online');
 
+  // Validation schema for Course form
   const CourseSchema = Yup.object().shape({
     course_name: Yup.string().required('Course name is required'),
     description: Yup.string().required('Description is required'),
@@ -53,6 +53,7 @@ export default function CourseForm({ isEdit, data }) {
     type: Yup.string().oneOf(Object.values(SELECT_TYPE)).required('Type is required'),
   });
 
+  // Default form values
   const defaultValues = useMemo(
     () => ({
       course_id: data?.id || '',
@@ -72,11 +73,7 @@ export default function CourseForm({ isEdit, data }) {
     [data, selectedStatus, selectedType]
   );
 
-  const handleChange = (e, name, state) => {
-    state(e.target.value);
-    setValue(name, e.target.value);
-  };
-
+  // Form methods from react-hook-form
   const methods = useForm({
     resolver: yupResolver(CourseSchema),
     defaultValues,
@@ -90,8 +87,9 @@ export default function CourseForm({ isEdit, data }) {
     formState: { isSubmitting, errors },
   } = methods;
 
-  const values = watch();
+  const values = watch(); // Watch for form values changes
 
+  // Effect to reset form on edit or initialize with default values
   useEffect(() => {
     if (isEdit && data) {
       reset(defaultValues);
@@ -104,15 +102,15 @@ export default function CourseForm({ isEdit, data }) {
     } else {
       reset(defaultValues);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, data, defaultValues, reset]);
 
+  // Handle form submission
   const onSubmit = async () => {
     try {
       if (isEdit) {
         await updateCourseApi(values)
           .then((res) => {
-            enqueueSnackbar(res?.data?.message);
+            enqueueSnackbar(res?.data?.message, { variant: 'success' });
             formClear();
             navigate('/admin/courses');
           })
@@ -138,6 +136,7 @@ export default function CourseForm({ isEdit, data }) {
     }
   };
 
+  // Clear form values and reset state
   const formClear = () => {
     if (isEdit) {
       reset(defaultValues);
@@ -146,7 +145,23 @@ export default function CourseForm({ isEdit, data }) {
     } else {
       reset();
       setSelectedStatus('Active');
-      setSelectedType('online');
+      setSelectedType('Online');
+    }
+  };
+
+  // Handle change events for form inputs
+  const handleChange = (e, name, state) => {
+    state(e.target.value);
+    setValue(name, e.target.value);
+  };
+
+  // Handle start date change and calculate end date
+  const onStartDateChange = (newValue) => {
+    setValue('start_date', newValue);
+    if (values.duration) {
+      const numDuration = parseInt(values.duration, 10);
+      const newEndDate = dayjs(newValue).add(numDuration, 'day');
+      setValue('end_date', newEndDate);
     }
   };
 
@@ -160,23 +175,21 @@ export default function CourseForm({ isEdit, data }) {
             </Typography>
             <form noValidate>
               <FormBox>
-                <RHFTextField name="course_name" label="Course Name" required />
-                <RHFTextField name="description" label="Description" multiline rows={3} required />
-                <RHFTextField name="fees" label="Fees" required />
-                <RHFTextField name="discount_fees" label="Discount Fees" />
-                <RHFTextField name="duration" label="Duration (days)" />
-                <RHFTextField name="location" label="Location" />
-                <RHFTextField name="max_capacity" label="Max Capacity" />
-                <RHFTextField name="current_capacity" label="Current Capacity" />
+                <RHFTextField name="course_name" label="Course Name" required InputLabelProps={{ required: true }} />
+                <RHFTextField name="description" label="Description" multiline rows={3} required InputLabelProps={{ required: true }} />
+                <RHFTextField name="fees" label="Fees" required InputLabelProps={{ required: true }} />
+                <RHFTextField name="discount_fees" label="Discount Fees" InputLabelProps={{ required: true }} />
+                <RHFTextField name="duration" label="Duration (days)" InputLabelProps={{ required: true }} />
+                <RHFTextField name="location" label="Location" InputLabelProps={{ required: true }} />
+                <RHFTextField name="max_capacity" label="Max Capacity" InputLabelProps={{ required: true }} />
 
+                {/* Date pickers for start date and end date */}
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <StyledDatePicker
                     label="Start Date"
                     name="start_date"
                     value={values?.start_date}
-                    onChange={(e) => {
-                        onStarDateChange(e);
-                    }}
+                    onChange={(e) => onStartDateChange(e)}
                     format="YYYY-MM-DD"
                     slotProps={{
                       textField: {
@@ -193,9 +206,7 @@ export default function CourseForm({ isEdit, data }) {
                     label="End Date"
                     name="end_date"
                     value={values?.end_date}
-                    onChange={(e) => {
-                      setValue('end_date', e);
-                    }}
+                    onChange={(e) => setValue('end_date', e)}
                     format="YYYY-MM-DD"
                     slotProps={{
                       textField: {
@@ -207,11 +218,13 @@ export default function CourseForm({ isEdit, data }) {
                   />
                 </LocalizationProvider>
 
+                {/* Select inputs for status and type */}
                 <RHFSelect
                   name="status"
                   label="Status"
                   value={selectedStatus}
                   onChange={(e) => handleChange(e, 'status', setSelectedStatus)}
+                  InputLabelProps={{ required: true }}
                 >
                   {Object.entries(SELECT_STATUS).map(([key, value]) => (
                     <option key={key} value={value}>
@@ -225,6 +238,7 @@ export default function CourseForm({ isEdit, data }) {
                   label="Type"
                   value={selectedType}
                   onChange={(e) => handleChange(e, 'type', setSelectedType)}
+                  InputLabelProps={{ required: true }}
                 >
                   {Object.entries(SELECT_TYPE).map(([key, value]) => (
                     <option key={key} value={value}>
@@ -235,6 +249,7 @@ export default function CourseForm({ isEdit, data }) {
               </FormBox>
             </form>
 
+            {/* Component for form bottom actions */}
             <FormBottomButton
               cancelButton="/admin/courses"
               onClear={() => formClear()}

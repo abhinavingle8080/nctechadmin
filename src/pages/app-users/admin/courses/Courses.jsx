@@ -108,10 +108,8 @@ export default function Courses() {
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
-    setRowsPerPage(parseInt(event.target.value, 10));
     setPayload({
       ...payload,
-      limit: parseInt(event.target.value, 10),
       limit: parseInt(event.target.value, 10),
     });
   };
@@ -192,12 +190,7 @@ export default function Courses() {
           filterName={filterName}
           onFilterName={handleFilterByName}
         />
-        <CourseTableToolbar
-          numSelected={selected.length}
-          filterName={filterName}
-          onFilterName={handleFilterByName}
-        />
-
+        
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
@@ -244,14 +237,9 @@ export default function Courses() {
             </Table>
           </TableContainer>
         </Scrollbar>
-                {notFound && <TableNoData query={filterName} />}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Scrollbar>
 
         <TablePagination
-          page={payload.page - 1}
+          page={page}
           component="div"
           count={count}
           rowsPerPage={rowsPerPage}
