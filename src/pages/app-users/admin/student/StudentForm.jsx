@@ -20,10 +20,9 @@ import '../../../../assets/css/PhoneInput.css';
 import CourseSelect from 'src/components/select/CourseSelect'; // Import CourseSelect component
 
 import { FormBox, FormBottomButton } from '../../../../sections/@dashboard/user/form';
-import { RHFSelect, FormProvider, RHFTextField } from '../../../../components/hook-form';
+import { RHFSelect, RHFTextField, FormProvider } from '../../../../components/hook-form';
 import { createStudentApi, updateStudentApi } from '../../../../apis/admin/student/StudentApis';
 import { SELECT_STATUS } from '../../../../data/constants';
-
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +30,6 @@ StudentForm.propTypes = {
   isEdit: PropTypes.bool,
   data: PropTypes.object,
 };
-
 
 const StyledDatePicker = styled(DatePicker)(() => ({
   '& .MuiInputLabel-asterisk': {
@@ -51,9 +49,7 @@ export default function StudentForm({ isEdit, data }) {
   const StudentSchema = Yup.object().shape({
     first_name: Yup.string().required('First name is required'),
     last_name: Yup.string().required('Last name is required'),
-    email: Yup.string()
-      .email('Invalid email')
-      .required('Email is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
     birth_date: Yup.string()
       .nullable()
       .required('Date of birth is required')
@@ -96,12 +92,14 @@ export default function StudentForm({ isEdit, data }) {
       phone_no: data?.phone_no || '',
       birth_date: data?.birth_date ? dayjs(data?.birth_date) : null,
       education: data?.education || '',
+      
       college: data?.college || '',
       parents_contact_no: data?.parents_contact_no || '',
       status: !isEdit ? selectedStatus : data?.status || '',
       course_id: data?.course_id || '', // Initialize course_id from data if available
     }),
-    [data, isEdit, selectedStatus]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data, isEdit]
   );
 
   const handleChange = (e, name, state) => {
@@ -124,32 +122,32 @@ export default function StudentForm({ isEdit, data }) {
 
   const values = watch();
 
-  useEffect(() => {
-    if (isEdit && data) {
-      reset(defaultValues);
-      if (data.status !== undefined && data.status !== null) {
-        setSelectedStatus(data.status);
+  useEffect(
+    () => {
+      if (isEdit && data) {
+        reset(defaultValues);
+        if (data.status !== undefined && data.status !== null) {
+          setSelectedStatus(data.status);
+        }
+        if (data.country_code && data.phone_no) {
+          setPhoneNo(`+${data.country_code} ${data.phone_no}`);
+        }
+        if (data.parents_contact_no) {
+          setParentsContactNo(data.parents_contact_no);
+        }
       }
-      if (data.country_code && data.phone_no) {
-        setPhoneNo(`+${data.country_code} ${data.phone_no}`);
+      if (!isEdit) {
+        reset(defaultValues);
       }
-      if (data.parents_contact_no) {
-        setParentsContactNo(data.parents_contact_no);
-      }
-    }
-    if (!isEdit) {
-      reset(defaultValues);
-    }
-  }, [isEdit, data, defaultValues, reset]);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isEdit, data]
+  );
 
-  const onSubmit = async () => {
+  const onSubmit = async (formValues) => {
     try {
-      if (values.birth_date && dayjs(values.birth_date).isAfter(dayjs(), 'day')) {
-        enqueueSnackbar("Cannot select a future date for birth date", { variant: 'error' });
-        return;
-      }
       if (isEdit) {
-        await updateStudentApi(values)
+        await updateStudentApi(formValues)
           .then((res) => {
             enqueueSnackbar(res?.data?.message);
             formClear();
@@ -160,7 +158,7 @@ export default function StudentForm({ isEdit, data }) {
             enqueueSnackbar(err?.response?.data?.message, { variant: 'error' });
           });
       } else {
-        await createStudentApi(values)
+        await createStudentApi(formValues)
           .then((res) => {
             enqueueSnackbar(res?.data?.message, { variant: 'success' });
             formClear();
@@ -201,7 +199,6 @@ export default function StudentForm({ isEdit, data }) {
     setSelectedCourse(course);
     setValue('course_id', course.value);
   };
-  
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -253,9 +250,7 @@ export default function StudentForm({ isEdit, data }) {
                     value={parentsContactNo}
                   />
                   {errors.parents_contact_no && (
-                    <FormHelperText error>
-                      {errors.parents_contact_no?.message}{' '}
-                    </FormHelperText>
+                    <FormHelperText error>{errors.parents_contact_no?.message} </FormHelperText>
                   )}
                 </div>
                 <RHFSelect
@@ -280,12 +275,14 @@ export default function StudentForm({ isEdit, data }) {
                   isRequired
                 />
               </FormBox>
-              <FormBottomButton
-                reset={formClear}
-                onSubmit={handleSubmit(onSubmit)}
-                disabled={isSubmitting}
-              />
             </form>
+            <FormBottomButton
+              // reset={formClear}
+              cancelButton="/admin/employees"
+              onClear={() => formClear()}
+              isSubmitting={isSubmitting}
+              isEdit={isEdit}
+            />
           </Card>
         </Grid>
       </Grid>

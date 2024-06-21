@@ -63,7 +63,7 @@ function StudentDetails({ data }) {
     },
     {
       label: 'Admission Date',
-      value: data?.admission_date ? moment(data.admission_date).format('DD/MM/YYYY') : 'N/A',
+      value: data?.created_at ? moment(data.created_at).format('DD/MM/YYYY') : 'N/A',
     },
     {
       label: 'Status',
