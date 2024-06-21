@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -18,7 +17,6 @@ import Iconify from 'src/components/iconify';
 export default function UserTableRow({
   selected,
   name,
-  avatarUrl,
   email,
   course,
   description,
@@ -27,14 +25,9 @@ export default function UserTableRow({
   paymentAmount,
   status,
   type,
-  designation,
-  emp_start_date,
-  handleClick,
-  onDelete,
   onView,
   onEdit,
-  
-   
+  onDelete,
 }) {
   const [open, setOpen] = useState(null);
 
@@ -50,16 +43,13 @@ export default function UserTableRow({
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
         <TableCell padding="checkbox">
-          <Checkbox disableRipple checked={selected} onChange={handleClick} />
+          <Checkbox disableRipple checked={selected} onChange={() => {}} />
         </TableCell>
 
         <TableCell component="th" scope="row" padding="none">
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
-            <Typography variant="subtitle2" noWrap>
-              {name}
-            </Typography>
-          </Stack>
+          <Typography variant="subtitle2" noWrap>
+            {name}
+          </Typography>
         </TableCell>
         <TableCell>{course} {description}</TableCell>
         <TableCell>{fees}</TableCell>
@@ -116,23 +106,17 @@ export default function UserTableRow({
 }
 
 UserTableRow.propTypes = {
-  avatarUrl: PropTypes.any,
-  email: PropTypes.any,
-  handleClick: PropTypes.func,
-  emp_start_date: PropTypes.any,
-  name: PropTypes.any,
-  course: PropTypes.any,
-  paymentAmount: PropTypes.any,
-  date: PropTypes.any,
-  designation: PropTypes.any,
-  selected: PropTypes.any,
-  status: PropTypes.string,
-  type: PropTypes.string,
-  onView: PropTypes.func,
-  onEdit: PropTypes.func,
-  onDelete: PropTypes.func,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string,
+  course: PropTypes.string,
   description: PropTypes.string,
   fees: PropTypes.number.isRequired,
-
-    // Assuming these are strings, adjust as per actual data type
+  date: PropTypes.string,
+  paymentAmount: PropTypes.number,
+  status: PropTypes.string,
+  type: PropTypes.string,
+  onView: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired,
 };
