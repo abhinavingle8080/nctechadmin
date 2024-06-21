@@ -333,8 +333,8 @@ export default function StudentForm({ isEdit, data }) {
                   )}
                 </Grid>
               </Grid>
-              <FormBottomButton isSubmitting={isSubmitting} isEdit={isEdit} />
             </form>
+            <FormBottomButton isSubmitting={isSubmitting} isEdit={isEdit} />
           </Card>
         </Grid>
       </Grid>
