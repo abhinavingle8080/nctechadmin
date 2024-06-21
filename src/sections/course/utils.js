@@ -48,7 +48,7 @@ export const visuallyHidden = {
   
     if (filterName) {
       inputData = inputData.filter(
-        (user) => user.title.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        (user) => user.course_name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
       );
     }
   
