@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import propTypes from 'prop-types';
 import { capitalCase } from 'change-case';
+import { Link as RouterLink } from 'react-router-dom';
 
 // @mui
-import { Tab, Box, Tabs, Card, Container } from '@mui/material';
+import { Tab, Box, Tabs, Card,Stack,Button,Container } from '@mui/material';
 
 // sections
 import PaymentDetails from './PaymentDetails'; // Import your PaymentDetails component
@@ -39,23 +40,34 @@ export default function ViewPayment({ details, logs }) {
     <Page title="View Payment">
       <Card sx={{ mb: 3 }}>
         <Container maxWidth={themeStretch ? false : 'lg'}>
-          <Tabs
-            value={currentTab}
-            scrollButtons="auto"
-            variant="scrollable"
-            allowScrollButtonsMobile
-            onChange={(e, value) => setCurrentTab(value)}
-          >
-            {DETAIL_TABS.map((tab) => (
-              <Tab
-                disableRipple
-                key={tab.value}
-                label={capitalCase(tab.value)}
-                value={tab.value}
-                style={{ textTransform: 'capitalize' }}
-              />
-            ))}
-          </Tabs>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+            <Tabs
+              value={currentTab}
+              scrollButtons="auto"
+              variant="scrollable"
+              allowScrollButtonsMobile
+              onChange={(e, value) => setCurrentTab(value)}
+            >
+              {DETAIL_TABS.map((tab) => (
+                <Tab
+                  disableRipple
+                  key={tab.value}
+                  label={capitalCase(tab.value)}
+                  value={tab.value}
+                  style={{ textTransform: 'capitalize' }}
+                />
+              ))}
+            </Tabs>
+            <Button
+              variant="contained"
+              to="/admin/payments/add"
+              component={RouterLink}
+              color="inherit"
+              // startIcon={<Iconify icon="eva:plus-fill" />}
+            >
+              Download Invoice
+            </Button>
+          </Stack>
 
           <Box sx={{ mb: 1 }} />
 
