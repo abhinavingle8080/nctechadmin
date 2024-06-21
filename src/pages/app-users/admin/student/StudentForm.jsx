@@ -13,7 +13,7 @@ import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { Card, Grid, styled, Typography, FormHelperText } from '@mui/material';
+import { Card, Grid, styled, Button,Avatar,TextField,Typography, FormHelperText } from '@mui/material';
 
 // components
 import '../../../../assets/css/PhoneInput.css';
@@ -42,6 +42,8 @@ export default function StudentForm({ isEdit, data }) {
   const [selectedStatus, setSelectedStatus] = useState('Active');
   const [phoneNo, setPhoneNo] = useState('');
   const [parentsContactNo, setParentsContactNo] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
+  const [profileImagePreview, setProfileImagePreview] = useState(null);
 
   const { enqueueSnackbar } = useSnackbar();
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -80,6 +82,7 @@ export default function StudentForm({ isEdit, data }) {
     education: Yup.string().required('Education is required'),
     college: Yup.string().required('College is required'),
     course_id: Yup.string().required('Course is required'), // Add course_id validation
+    profile_image: Yup.mixed().nullable(),
   });
 
   const defaultValues = useMemo(
@@ -92,11 +95,11 @@ export default function StudentForm({ isEdit, data }) {
       phone_no: data?.phone_no || '',
       birth_date: data?.birth_date ? dayjs(data?.birth_date) : null,
       education: data?.education || '',
-      
       college: data?.college || '',
       parents_contact_no: data?.parents_contact_no || '',
       status: !isEdit ? selectedStatus : data?.status || '',
       course_id: data?.course_id || '', // Initialize course_id from data if available
+      profile_image: data?.profile_image || null,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [data, isEdit]
@@ -135,6 +138,9 @@ export default function StudentForm({ isEdit, data }) {
         if (data.parents_contact_no) {
           setParentsContactNo(data.parents_contact_no);
         }
+        if (data.profile_image) {
+          setProfileImagePreview(data.profile_image);
+        }
       }
       if (!isEdit) {
         reset(defaultValues);
@@ -146,8 +152,17 @@ export default function StudentForm({ isEdit, data }) {
 
   const onSubmit = async (formValues) => {
     try {
+      const formData = new FormData();
+      Object.entries(formValues).forEach(([key, value]) => {
+        if (key === 'profile_image' && value instanceof File) {
+          formData.append(key, value);
+        } else {
+          formData.append(key, value);
+        }
+      });
+
       if (isEdit) {
-        await updateStudentApi(formValues)
+        await updateStudentApi(formData)
           .then((res) => {
             enqueueSnackbar(res?.data?.message);
             formClear();
@@ -158,7 +173,7 @@ export default function StudentForm({ isEdit, data }) {
             enqueueSnackbar(err?.response?.data?.message, { variant: 'error' });
           });
       } else {
-        await createStudentApi(formValues)
+        await createStudentApi(formData)
           .then((res) => {
             enqueueSnackbar(res?.data?.message, { variant: 'success' });
             formClear();
@@ -200,6 +215,15 @@ export default function StudentForm({ isEdit, data }) {
     setValue('course_id', course.value);
   };
 
+  const handleProfileImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfileImage(file);
+      setProfileImagePreview(URL.createObjectURL(file));
+      setValue('profile_image', file);
+    }
+  };
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
@@ -208,63 +232,62 @@ export default function StudentForm({ isEdit, data }) {
             <Typography sx={{ p: 2 }} color="#FF4842" fontSize={13}>
               All fields marked with * are mandatory
             </Typography>
-            <form noValidate>
-              <FormBox>
-                <RHFTextField name="first_name" label="First Name" required />
-                <RHFTextField name="last_name" label="Last Name" required />
-                <RHFTextField name="email" label="Email" required />
-                <RHFTextField name="education" label="Education" required />
-                <RHFTextField name="college" label="College" required />
-                <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <RHFTextField name="first_name" label="First Name" />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <RHFTextField name="last_name" label="Last Name" />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <RHFTextField name="email" label="Email Address" />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <StyledDatePicker
+                      label="Date of Birth"
+                      value={values.birth_date}
+                      onChange={(date) => {
+                        setValue('birth_date', date);
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth error={!!errors.birth_date} helperText={errors.birth_date?.message} />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </Grid>
+                <Grid item xs={12} md={6}>
                   <PhoneInput
-                    onChange={(e) => handlePhoneInput(e, 'phone_no', setPhoneNo)}
-                    placeholder="Enter phone number with (+91)"
-                    defaultCountry="IN"
+                    placeholder="Phone Number"
                     value={phoneNo}
-                  />
-                  {errors.phone_no && (
-                    <FormHelperText error>{errors.phone_no?.message} </FormHelperText>
-                  )}
-                </div>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <StyledDatePicker
-                    label="Date of Birth"
-                    name="birth_date"
-                    value={values?.birth_date}
-                    onChange={(e) => setValue('birth_date', e)}
-                    format="YYYY-MM-DD"
-                    slotProps={{
-                      textField: {
-                        helperText: errors.birth_date ? errors.birth_date.message : null,
-                        error: Boolean(errors.birth_date),
-                        required: true,
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-                <div>
-                  <PhoneInput
-                    onChange={(e) => handlePhoneInput(e, 'parents_contact_no', setParentsContactNo)}
-                    placeholder="Enter parents contact number with (+91)"
                     defaultCountry="IN"
-                    value={parentsContactNo}
+                    onChange={(e) => {
+                      handlePhoneInput(e, 'phone_no', setPhoneNo);
+                    }}
+                    error={!!errors.phone_no}
                   />
-                  {errors.parents_contact_no && (
-                    <FormHelperText error>{errors.parents_contact_no?.message} </FormHelperText>
-                  )}
-                </div>
-                <RHFSelect
-                  name="status"
-                  label="Status"
-                  value={selectedStatus}
-                  onChange={(e) => handleChange(e, 'status', setSelectedStatus)}
-                >
-                  {Object.entries(SELECT_STATUS).map(([key, value]) => (
-                    <option key={key} value={value}>
-                      {key}
-                    </option>
-                  ))}
-                </RHFSelect>
+                  <FormHelperText error>{errors.phone_no?.message}</FormHelperText>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <PhoneInput
+                    placeholder="Parents Contact Number"
+                    value={parentsContactNo}
+                    defaultCountry="IN"
+                    onChange={(e) => {
+                      handlePhoneInput(e, 'parents_contact_no', setParentsContactNo);
+                    }}
+                    error={!!errors.parents_contact_no}
+                  />
+                  <FormHelperText error>{errors.parents_contact_no?.message}</FormHelperText>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <RHFTextField name="education" label="Education" />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <RHFTextField name="college" label="College" />
+                </Grid>
+                <Grid item xs={12} md={6}>
                 <CourseSelect
                   name="course_id"
                   label="Course"
@@ -274,15 +297,44 @@ export default function StudentForm({ isEdit, data }) {
                   errorText={errors.course_id?.message}
                   isRequired
                 />
-              </FormBox>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  
+                <RHFSelect
+                  name="status"
+                  label="Status"
+                  placeholder="Status"
+                  value={selectedStatus}
+                  onChange={(e) => handleChange(e, 'status', setSelectedStatus)}
+                >
+                  {Object.entries(SELECT_STATUS).map(([key, value]) => (
+                    <option key={key} value={value}>
+                      {key}
+                    </option>
+                  ))}
+                </RHFSelect>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2">
+                  <RHFTextField name="profile_image" label="Profile Image" />
+                  </Typography>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleProfileImageChange}
+                    style={{ marginTop: '10px', display: 'block' }}
+                  />
+                  {profileImagePreview && (
+                    <Avatar
+                      src={profileImagePreview}
+                      alt="Profile Image Preview"
+                      sx={{ width: 100, height: 100, mt: 2 }}
+                    />
+                  )}
+                </Grid>
+              </Grid>
+              <FormBottomButton isSubmitting={isSubmitting} isEdit={isEdit} />
             </form>
-            <FormBottomButton
-              // reset={formClear}
-              cancelButton="/admin/employees"
-              onClear={() => formClear()}
-              isSubmitting={isSubmitting}
-              isEdit={isEdit}
-            />
           </Card>
         </Grid>
       </Grid>
