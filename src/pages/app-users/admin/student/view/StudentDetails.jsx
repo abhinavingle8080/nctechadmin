@@ -21,16 +21,17 @@ StudentDetails.propTypes = {
 function StudentDetails({ data }) {
   const studentData = [
     {
-      label: 'First Name',
-      value: data?.first_name ? data.first_name : 'N/A',
+      label: 'Name',
+      value: data?.first_name ? `${data?.first_name} ${data?.last_name}` : "N/A"
     },
     {
-      label: 'Last Name',
-      value: data?.last_name ? data.last_name : 'N/A',
+      label: 'Phone Number',
+      value: data?.phone_no ? `${data?.country_code} ${data?.phone_no}` : 'N/A',
     },
     {
       label: 'Email',
       value: data?.email ? data.email : 'N/A',
+
     },
     {
       label: 'Birth Date',
@@ -39,7 +40,7 @@ function StudentDetails({ data }) {
     {
       label: 'Phone Number',
       value: data?.phone_no ? `${data?.country_code} ${data?.phone_no}` : 'N/A',
-  },
+    },
     {
       label: 'Education',
       value: data?.education ? data.education : 'N/A',
@@ -51,7 +52,7 @@ function StudentDetails({ data }) {
     {
       label: 'Parents Contact Number',
       value: data?.parents_contact_no ? `${data?.country_code} ${data?.parents_contact_no}` : 'N/A',
-  },
+    },
     {
       label: 'Profile Image',
       value: data?.profile_image ? <img src={data.profile_image} alt="Profile" /> : 'N/A',
@@ -72,10 +73,7 @@ function StudentDetails({ data }) {
       label: 'Course',
       value: data?.Course ? data.Course.course_name : 'N/A',
     },
-    {
-      label: 'Created At',
-      value: data?.created_at ? moment(data.created_at).format('DD/MM/YYYY') : 'N/A',
-    },
+
   ];
 
   return (
