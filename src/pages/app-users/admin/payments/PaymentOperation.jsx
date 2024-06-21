@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import {useParams, useLocation, Link as RouterLink} from 'react-router-dom';
 
 // @mui
-import { Container } from '@mui/material';
+import { Stack, Button,  Container } from '@mui/material';
+import moment from 'moment';
 
 // sections
 import PaymentForm from './PaymentForm';
@@ -56,9 +57,38 @@ export default function PaymentOperation() {
     getPayment(id);
   }, [id, isEdit, isView]);
 
+  const handleDownload = async (url) => {
+    try {
+      if (!url) {
+        return;
+      }
+
+      const studenName = `${data?.Student?.first_name}-${data?.Student?.last_name}`;
+      const formattedDate = data?.created_at ? moment(data?.created_at).format('DD-MM-YYYY') : '';
+
+      const fileName = `${studenName}-${formattedDate}.pdf`;
+
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const urlBlob = window.URL.createObjectURL(blob);
+
+      const anchor = document.createElement('a');
+      anchor.href = urlBlob;
+      anchor.download = fileName;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+
+      window.URL.revokeObjectURL(urlBlob);
+    } catch (error) {
+      console.error('Failed to download file:', error);
+    }
+  };
+
   return (
     <Page title={`${name} ${title}`}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <HeaderBreadcrumbs
           heading={heading}
           links={[
@@ -67,6 +97,18 @@ export default function PaymentOperation() {
             { name: `${name} ${title}` },
           ]}
         />
+        {
+          isView ? (
+            <Button variant="contained" to="/admin/payments/add" component={RouterLink} color="inherit"
+             onClick={() => handleDownload(data?.invoice_url)}>
+            Download Invoice
+          </Button>
+          ) : (
+            null
+          )
+        }
+     
+        </Stack>
 
         {isView ? (
           <ViewPayment details={data} logs={data} />

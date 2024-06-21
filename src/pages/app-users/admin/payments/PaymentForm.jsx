@@ -53,7 +53,7 @@ export default function PaymentForm({ isEdit, data }) {
   const navigate = useNavigate(); // Define the navigate function
   const { enqueueSnackbar } = useSnackbar();
   const [dueAmount, setDueAmount] = useState(0);
-  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState('Pending');
+  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState('Completed');
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Online');
   const [selectedCourse, setSelectedCourse] = useState(null);
 
@@ -87,7 +87,7 @@ export default function PaymentForm({ isEdit, data }) {
       course_amount: data?.course_amount || '',
       due_amount: data?.due_amount || '',
       date: data?.date ? dayjs(data?.date) : dayjs(moment().format('YYYY-MM-DD')),
-      payment_status: data?.payment_status || 'Pending',
+      payment_status: data?.payment_status || 'Completed',
       payment_method: data?.payment_method || 'Online',
     }),
     [data]
@@ -171,7 +171,7 @@ export default function PaymentForm({ isEdit, data }) {
       setSelectedPaymentMethod(data?.payment_method);
     } else {
       reset();
-      setSelectedPaymentStatus('Pending');
+      setSelectedPaymentStatus('Coompleted');
       setSelectedPaymentMethod('Online');
     }
   };

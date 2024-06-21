@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import propTypes from 'prop-types';
 import { capitalCase } from 'change-case';
-import { Link as RouterLink } from 'react-router-dom';
+
 
 // @mui
 import { Tab, Box, Tabs, Card,Stack,Button,Container } from '@mui/material';
@@ -58,15 +58,6 @@ export default function ViewPayment({ details, logs }) {
                 />
               ))}
             </Tabs>
-            <Button
-              variant="contained"
-              to="/admin/payments/add"
-              component={RouterLink}
-              color="inherit"
-              // startIcon={<Iconify icon="eva:plus-fill" />}
-            >
-              Download Invoice
-            </Button>
           </Stack>
 
           <Box sx={{ mb: 1 }} />
