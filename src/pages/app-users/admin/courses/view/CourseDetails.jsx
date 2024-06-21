@@ -38,8 +38,8 @@ function CourseDetails({ course }) {
       value: course?.discount_fees ? `$${parseInt(course?.discount_fees, 10)?.toFixed(2)}` : 'N/A',
     },
     {
-      label: 'Duration (hours)',
-      value: course.duration ? `${course.duration} hours` : 'N/A',
+      label: 'Duration (days)',
+      value: course.duration ? `${course.duration} days` : 'N/A',
     },
     {
       label: 'Start Date',
