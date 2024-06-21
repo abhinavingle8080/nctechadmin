@@ -40,15 +40,24 @@ export default function CourseForm({ isEdit, data }) {
   // Validation schema for Course form
   const CourseSchema = Yup.object().shape({
     course_name: Yup.string().required('Course name is required'),
-    description: Yup.string().required('Description is required'),
-    fees: Yup.number().required('Fees are required').typeError('Fees must be a number'),
-    discount_fees: Yup.number().typeError('Discount fees must be a number'),
+    description: Yup.string().required('Description is required').max(500, 'Description must not exceed 500 characters'),
+    fees: Yup.string()
+    .required('Fees are required')
+    .test('is-number', 'Fees must be a number', value => {
+      if (!value) return true; // Allow empty value (handled by 'required')
+      return /^\d+(\.\d+)?$/.test(value); // Match numbers with optional decimal
+    }),
+  discount_fees: Yup.string()
+    .test('is-number', 'Discount fees must be a number', value => {
+      if (!value) return true; // Allow empty value
+      return /^\d+(\.\d+)?$/.test(value); // Match numbers with optional decimal
+    }),
     duration: Yup.number().typeError('Duration must be a number'),
     start_date: Yup.string().required('Start date is required'),
     end_date: Yup.string().required('End date is required'),
     location: Yup.string(),
     max_capacity: Yup.number().typeError('Max capacity must be a number'),
-    current_capacity: Yup.number().typeError('Current capacity must be a number'),
+    // current_capacity: Yup.number().typeError('Current capacity must be a number'),
     status: Yup.string().oneOf(Object.values(SELECT_STATUS)).required('Status is required'),
     type: Yup.string().oneOf(Object.values(SELECT_TYPE)).required('Type is required'),
   });
@@ -66,7 +75,6 @@ export default function CourseForm({ isEdit, data }) {
       end_date: data?.end_date ? dayjs(data?.end_date) : null,
       location: data?.location || '',
       max_capacity: data?.max_capacity || '',
-      current_capacity: data?.current_capacity || '',
       status: data?.status || selectedStatus,
       type: data?.type || selectedType,
     }),
@@ -102,11 +110,13 @@ export default function CourseForm({ isEdit, data }) {
     } else {
       reset(defaultValues);
     }
-  }, [isEdit, data, defaultValues, reset]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEdit, data]);
 
   // Handle form submission
   const onSubmit = async () => {
     try {
+      console.log("Submitting form with values: ", values);
       if (isEdit) {
         await updateCourseApi(values)
           .then((res) => {
@@ -115,7 +125,7 @@ export default function CourseForm({ isEdit, data }) {
             navigate('/admin/courses');
           })
           .catch((err) => {
-            console.error(err);
+            console.error("Error updating course: ", err);
             enqueueSnackbar(err?.response?.data?.message, { variant: 'error' });
           });
       } else {
@@ -126,15 +136,16 @@ export default function CourseForm({ isEdit, data }) {
             navigate('/admin/courses');
           })
           .catch((err) => {
-            console.error(err);
+            console.error("Error creating course: ", err);
             enqueueSnackbar(err?.response?.data?.message, { variant: 'error' });
           });
       }
     } catch (error) {
-      console.error(error);
+      console.error("Submission error: ", error);
       enqueueSnackbar(error?.response?.data?.message, { variant: 'error' });
     }
   };
+
 
   // Clear form values and reset state
   const formClear = () => {
@@ -176,11 +187,10 @@ export default function CourseForm({ isEdit, data }) {
             <form noValidate>
               <FormBox>
                 <RHFTextField name="course_name" label="Course Name" required InputLabelProps={{ required: true }} />
-                <RHFTextField name="description" label="Description" multiline rows={3} required InputLabelProps={{ required: true }} />
                 <RHFTextField name="fees" label="Fees" required InputLabelProps={{ required: true }} />
                 <RHFTextField name="discount_fees" label="Discount Fees" InputLabelProps={{ required: true }} />
                 <RHFTextField name="duration" label="Duration (days)" InputLabelProps={{ required: true }} />
-                <RHFTextField name="location" label="Location" InputLabelProps={{ required: true }} />
+                <RHFTextField name="location" label="Location" />
                 <RHFTextField name="max_capacity" label="Max Capacity" InputLabelProps={{ required: true }} />
 
                 {/* Date pickers for start date and end date */}
@@ -246,6 +256,17 @@ export default function CourseForm({ isEdit, data }) {
                     </option>
                   ))}
                 </RHFSelect>
+                <RHFTextField
+                name="description"
+                label="Description"
+                multiline
+                rows={3}
+                sx={{ width: '205%' }} // Increase the width horizontally
+                required
+                InputLabelProps={{ required: true }}
+              />
+
+
               </FormBox>
             </form>
 
