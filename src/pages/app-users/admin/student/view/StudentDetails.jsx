@@ -73,6 +73,7 @@ function StudentDetails({ data }) {
       label: 'Course',
       value: data?.Course ? data.Course.course_name : 'N/A',
     },
+    
   ];
 
   return (
