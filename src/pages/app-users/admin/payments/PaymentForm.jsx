@@ -85,6 +85,7 @@ export default function PaymentForm({ isEdit, data }) {
       student_id: data?.student_id || '',
       course_id: data?.course_id || '',
       course_amount: data?.course_amount || '',
+      paid_amount: data?.paid_amount || '',
       due_amount: data?.due_amount || '',
       date: data?.date ? dayjs(data?.date) : dayjs(moment().format('YYYY-MM-DD')),
       payment_status: data?.payment_status || 'Completed',
@@ -113,14 +114,19 @@ export default function PaymentForm({ isEdit, data }) {
       reset(defaultValues);
       setSelectedPaymentStatus(data.payment_status);
       setSelectedPaymentMethod(data.payment_method);
-      setSelectedCourse(data.course_id);
-      setSelectedCourse(data.fees);
-      setSelectedCourse(data.date);
+      setSelectedCourse({
+        value: data?.Course?.id,
+        label: data?.Course?.course_name,
+        fees: data?.Course?.discount_fees,
+      });
+      setValue('course_amount', data?.Course?.discount_fees);
     }
     if (!isEdit) {
       reset(defaultValues);
     }
-  }, [isEdit, data, reset, defaultValues]);
+  }, 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [isEdit, data]);
 
   useEffect(() => {
     const calculateDueAmount = () => {

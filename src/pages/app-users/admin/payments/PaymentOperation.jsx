@@ -55,7 +55,9 @@ export default function PaymentOperation() {
     };
 
     getPayment(id);
-  }, [id, isEdit, isView]);
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  []);
 
   const handleDownload = async (url) => {
     try {
