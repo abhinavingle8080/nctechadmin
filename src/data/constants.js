@@ -151,6 +151,16 @@ export const SELECT_LEVEL = {
     Intermediate: 'intermediate',
     Advanced: 'advanced',
   }
+
+  
+   export const PAYMENT_STATUS = {
+        Completed: 'Completed',
+        Pending: 'Pending',
+        Failed: 'Failed',
+  }
+
+
+
   
 export const ALERTGREENCOLOR = '#1daa4d';
 export const ALERTREDCOLOR = '#e6322b';

@@ -40,6 +40,17 @@ export default function UserTableRow({
     setOpen(null);
   };
 
+  const getColorByStatus = (color) => {
+    switch (status) {
+      case 'Failed':
+        return 'error';
+      case 'Completed':
+        return 'success';
+      default:
+        return 'warning';
+    }
+  };
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -59,7 +70,9 @@ export default function UserTableRow({
         <TableCell>{paymentAmount}</TableCell>
         <TableCell>{date}</TableCell>
         <TableCell>
-          <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
+          <TableCell>
+            <Label color={getColorByStatus(status)}>{status}</Label>
+          </TableCell>
         </TableCell>
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>

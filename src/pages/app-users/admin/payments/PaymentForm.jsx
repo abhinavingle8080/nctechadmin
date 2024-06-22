@@ -37,7 +37,7 @@ const StyledDatePicker = styled(DatePicker)(() => ({
   },
 }));
 
-const PAYMENT_STATUS = {
+export const PAYMENT_STATUS = {
   Completed: 'Completed',
   Pending: 'Pending',
   Failed: 'Failed',
@@ -65,11 +65,11 @@ export default function PaymentForm({ isEdit, data }) {
       .min(0, 'Course amount must be non-negative'),
     date: Yup.string()
       .required('Date is required')
-      .test('is-future-date', 'Date cannot be in the past', (value) => {
+      .test('is-past-date', 'Date cannot be in the Future', (value) => {
         if (!value) return false; // If date is not provided, fail validation
         const selectedDate = dayjs(value);
         const today = dayjs();
-        return selectedDate.isAfter(today, 'day') || selectedDate.isSame(today, 'day'); // Validate if date is today or in the future
+        return selectedDate.isBefore(today, 'day') || selectedDate.isSame(today, 'day'); // Validate if date is today or in the future
       }),
     payment_status: Yup.string()
       .oneOf(Object.values(PAYMENT_STATUS))
@@ -226,6 +226,7 @@ export default function PaymentForm({ isEdit, data }) {
                 <RHFTextField name="due_amount" label="Due Amount" value={dueAmount} readOnly />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <StyledDatePicker
+                  maxDate={dayjs()}
                     label="Date"
                     name="payment_date"
                     value={values?.date}
