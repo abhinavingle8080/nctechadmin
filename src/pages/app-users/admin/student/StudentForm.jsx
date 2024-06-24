@@ -107,10 +107,12 @@ export default function StudentForm({ isEdit, data }) {
       birth_date: data?.birth_date ? dayjs(data?.birth_date) : null,
       education: data?.education || '',
       college: data?.college || '',
+      address: data?.address|| '',
       parents_contact_no: data?.parents_contact_no || '',
       status: !isEdit ? selectedStatus : data?.status || '',
       course_id: data?.course_id || '', // Initialize course_id from data if available
       profile_image: data?.profile_image || null,
+      admission_date: data?.admission_date || null
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [data, isEdit]
@@ -184,6 +186,7 @@ export default function StudentForm({ isEdit, data }) {
             enqueueSnackbar(err?.response?.data?.message, { variant: 'error' });
           });
       } else {
+        console.log('testing...')
         await createStudentApi(formData)
           .then((res) => {
             enqueueSnackbar(res?.data?.message, { variant: 'success' });
@@ -231,6 +234,9 @@ export default function StudentForm({ isEdit, data }) {
     setFileName(event.target.files[0].name);
   };
 
+  console.log('formik errors', errors);
+  console.log('formik values', values);
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
@@ -249,6 +255,26 @@ export default function StudentForm({ isEdit, data }) {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <RHFTextField name="email" label="Email Address" required/>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <StyledDatePicker
+                      label="Admission Date"
+                      value={values.admission_date}
+                      onChange={(date) => {
+                        setValue('admission_date', date);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          error={!!errors.admission_date}
+                          helperText={errors.admission_date?.message}
+                        />
+                      )}
+                    required/>
+                  </LocalizationProvider>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   
@@ -301,6 +327,9 @@ export default function StudentForm({ isEdit, data }) {
                   <RHFTextField name="college" label="College" required/>
                 </Grid>
                 <Grid item xs={12} md={6}>
+                  <RHFTextField name="address" label="Address" required/>
+                </Grid>
+                <Grid item xs={12} md={6}>
                   <CourseSelect
                     name="course_id"
                     label="Course"
@@ -341,7 +370,7 @@ export default function StudentForm({ isEdit, data }) {
                       type="button"
                       style={{ width: '150px' }}
                     >
-                      {values?.file ? 'Change' : 'Upload'}
+                      {values?.file ? 'Change' : 'Upload Image'}
                       <input
                         type="file"
                         accept="image/*"

@@ -50,6 +50,10 @@ function StudentDetails({ data }) {
       value: data?.college ? data.college : 'N/A',
     },
     {
+      label: 'Address',
+      value: data?.address ? data.address : 'N/A',
+    },
+    {
       label: 'Parents Contact Number',
       value: data?.parents_contact_no ? `${data?.country_code} ${data?.parents_contact_no}` : 'N/A',
     },

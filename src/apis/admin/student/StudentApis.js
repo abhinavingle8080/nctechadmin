@@ -1,5 +1,5 @@
 /* eslint-disable arrow-body-style */
-import { postMethod } from "../../apiConfig";
+import { postMethod, postFormDataMethod } from "../../apiConfig";
 
 export const getStudentsApi = (data) => {
     return postMethod('/superadmin/get-students', data);
@@ -10,11 +10,11 @@ export const getStudentApi = (data) => {
 };
 
 export const createStudentApi = (data) => {
-    return postMethod('/superadmin/create-student', data);
+    return postFormDataMethod('/superadmin/create-student', data);
 };
 
 export const updateStudentApi = (data) => {
-    return postMethod('/superadmin/update-student', data);
+    return postFormDataMethod('/superadmin/update-student', data);
 };
 
 export const deleteStudentApi = (data) => {
