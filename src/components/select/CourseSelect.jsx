@@ -84,7 +84,7 @@ function CourseSelect({ onChange, value, isError, ...other }) {
         id="course-select"
         label="Courses"
         onChange={(e) => {
-          const selectedOption = options.find(option => option.value === e.target.value);
+          const selectedOption = options.find(option => option?.value === e.target?.value);
           onChange(selectedOption);
         }}
         value={value?.value || ''}
@@ -94,7 +94,7 @@ function CourseSelect({ onChange, value, isError, ...other }) {
         {...other}
       >
         {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem key={option?.value} value={option?.value}>
             {option.label}
           </MenuItem>
         ))}
