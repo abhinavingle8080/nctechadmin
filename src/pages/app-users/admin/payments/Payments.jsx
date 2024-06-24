@@ -212,17 +212,17 @@ export default function Payments() {
               <TableBody>
                 {dataFiltered.map((row) => (
                   <UserTableRow
-                    key={row.id}
-                    name={`${row.Student.first_name} ${row.Student.last_name}`}
-                    course={`${row.Course.course_name}`}
-                    paymentAmount={row.paid_amount}
-                    date={moment(row.payment_date).format('DD/MM/YYYY')}
-                    status={row.payment_status}
-                    selected={selected.indexOf(row.studentName) !== -1}
-                    handleClick={(event) => handleClick(event, row.studentName)}
-                    onEdit={`/admin/payments/${row.id}/edit`}
-                    onView={`/admin/payments/${row.id}/view`}
-                    onDelete={() => handleDelete(row.id)}
+                    key={row?.id}
+                    name={`${row?.Student?.first_name} ${row?.Student?.last_name}`}
+                    course={`${row?.Course?.course_name}`}
+                    paymentAmount={row?.paid_amount}
+                    date={moment(row?.payment_date).format('DD/MM/YYYY')}
+                    status={row?.payment_status}
+                    selected={selected?.indexOf(row?.studentName) !== -1}
+                    handleClick={(event) => handleClick(event, row?.studentName)}
+                    onEdit={`/admin/payments/${row?.id}/edit`}
+                    onView={`/admin/payments/${row?.id}/view`}
+                    onDelete={() => handleDelete(row?.id)}
                   />
                 ))}
 
