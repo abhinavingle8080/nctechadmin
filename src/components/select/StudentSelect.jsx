@@ -78,7 +78,7 @@ function StudentSelect({ onChange, value, isError, ...other }) {
         required
         sx={{ '& .MuiInputLabel-asterisk': { color: 'red' } }}
       >
-        Student 
+        Student
       </InputLabel>
       <Select
         labelId="student-select-label"
@@ -92,7 +92,7 @@ function StudentSelect({ onChange, value, isError, ...other }) {
         {...other}
       >
         {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+          <MenuItem key={option?.value} value={option?.value}>{option?.label}</MenuItem>
         ))}
       </Select>
     </StyledFormControl>

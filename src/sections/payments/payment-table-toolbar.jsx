@@ -6,18 +6,21 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableToolbar({ numSelected, filterName, onFilterName }) {
+export default function UserTableToolbar({ numSelected, filterName, onFilterName, fromDate, toDate, onFromDateChange, onToDateChange }) {
   return (
     <Toolbar
       sx={{
         height: 96,
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
         p: (theme) => theme.spacing(0, 1, 0, 3),
         ...(numSelected > 0 && {
           color: 'primary.main',
@@ -42,6 +45,7 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
               />
             </InputAdornment>
           }
+          sx={{ width: '30%' }}
         />
       )}
 
@@ -51,13 +55,29 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
             <Iconify icon="eva:trash-2-fill" />
           </IconButton>
         </Tooltip>
-      // ) : (
-      //   <Tooltip title="Filter list">
-      //     <IconButton>
-      //       <Iconify icon="ic:round-filter-list" />
-      //     </IconButton>
-      //   </Tooltip>
-      ) : null}
+      ) : (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <TextField
+            label="From Date"
+            type="date"
+            value={fromDate}
+            onChange={onFromDateChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <Typography> To </Typography>
+          <TextField
+            label="To Date"
+            type="date"
+            value={toDate}
+            onChange={onToDateChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </Box>
+      )}
     </Toolbar>
   );
 }
@@ -66,4 +86,8 @@ UserTableToolbar.propTypes = {
   numSelected: PropTypes.number,
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
+  fromDate: PropTypes.string,
+  toDate: PropTypes.string,
+  onFromDateChange: PropTypes.func,
+  onToDateChange: PropTypes.func,
 };

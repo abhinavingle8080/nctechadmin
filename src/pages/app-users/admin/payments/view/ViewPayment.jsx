@@ -1,26 +1,14 @@
-// ViewPayment.jsx
-
 import { useState } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { capitalCase } from 'change-case';
-
-
-// @mui
-import { Tab, Box, Tabs, Card,Stack,Button,Container } from '@mui/material';
-
-// sections
+import { Tab, Box, Tabs, Card, Stack, Container } from '@mui/material';
 import PaymentDetails from './PaymentDetails'; // Import your PaymentDetails component
-// components
 import Page from '../../../../../components/Page';
-import Iconify from '../../../../../components/iconify';
-// hooks
 import useSettings from '../../../../../hooks/useSettings';
 
-// ----------------------------------------------------------------------
-
 ViewPayment.propTypes = {
-  details: propTypes.object,
-  logs: propTypes.array,
+  details: PropTypes.object,
+  logs: PropTypes.array,
 };
 
 export default function ViewPayment({ details, logs }) {
@@ -33,7 +21,6 @@ export default function ViewPayment({ details, logs }) {
       value: 'Payment Details',
       component: <PaymentDetails data={details} />,
     },
-    // Add more tabs if needed, similar to the above
   ];
 
   return (
