@@ -27,12 +27,12 @@ const navConfig = [
 {
   title: 'Courses',
   path: '/admin/courses',
-  icon: icon('ic_user'),  
+  icon: icon('ic_blog'),  
 },
 {
   title: 'Payments',
   path: '/admin/payments',
-  icon: icon('ic_user'),
+  icon: icon('ic_blog'),
 },
 ];
 

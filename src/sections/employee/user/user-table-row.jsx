@@ -23,7 +23,8 @@ export default function UserTableRow({
   avatarUrl,
   email,
   designation,
-  joiningDate,
+  emp_start_date,
+  date,
   status,
   handleClick,
   onDelete,
@@ -60,7 +61,9 @@ export default function UserTableRow({
 
         <TableCell>{designation}</TableCell>
 
-        <TableCell align="center">{joiningDate}</TableCell>
+        <TableCell >{emp_start_date}</TableCell>
+        <TableCell >{date}</TableCell>
+
 
         <TableCell>
           <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
@@ -115,9 +118,10 @@ UserTableRow.propTypes = {
   avatarUrl: PropTypes.any,
   email: PropTypes.any,
   handleClick: PropTypes.func,
-  joiningDate: PropTypes.any,
   name: PropTypes.any,
   designation: PropTypes.any,
+  emp_start_date: PropTypes.any,
+  date: PropTypes.any,
   selected: PropTypes.any,
   status: PropTypes.string,
   onView: PropTypes.func,

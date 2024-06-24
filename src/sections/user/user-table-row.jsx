@@ -20,10 +20,11 @@ export default function UserTableRow({
   name,
   avatarUrl,
   email,
+  designation,
   course,
   description,
   fees,
-  date,
+  emp_start_date,
   paymentAmount,
   status,
   handleClick,
@@ -56,18 +57,22 @@ export default function UserTableRow({
             </Typography>
           </Stack>
         </TableCell>
-        <TableCell>{course} {description}</TableCell>
-        <TableCell>{fees}</TableCell>
-        <TableCell>{paymentAmount} {date}</TableCell>
+        <TableCell>{email}</TableCell>
+        <TableCell>{designation}</TableCell>
+        <TableCell>{emp_start_date}</TableCell>
         <TableCell>
           <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
         </TableCell>
+        {/* <TableCell>{course} {description}</TableCell>
+        <TableCell>{fees}</TableCell>
+        <TableCell>{paymentAmount} {date}</TableCell>
+
         <TableCell>{course}</TableCell>
         <TableCell>{paymentAmount}</TableCell>
         <TableCell>{date}</TableCell>
-      
+ */}
 
-       
+
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
             <Iconify icon="eva:more-vertical-fill" />
@@ -118,9 +123,10 @@ UserTableRow.propTypes = {
   email: PropTypes.any,
   handleClick: PropTypes.func,
   name: PropTypes.any,
+  designation: PropTypes.any,
+  emp_start_date: PropTypes.any,
   course: PropTypes.any,
   paymentAmount: PropTypes.any,
-  date: PropTypes.any,
   selected: PropTypes.any,
   status: PropTypes.string,
   onView: PropTypes.func,
@@ -129,5 +135,5 @@ UserTableRow.propTypes = {
   description: PropTypes.string,
   fees: PropTypes.number.isRequired,
 
-    // Assuming these are strings, adjust as per actual data type
+  // Assuming these are strings, adjust as per actual data type
 };
