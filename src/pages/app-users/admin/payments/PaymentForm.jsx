@@ -177,7 +177,7 @@ export default function PaymentForm({ isEdit, data }) {
       setSelectedPaymentMethod(data?.payment_method);
     } else {
       reset();
-      setSelectedPaymentStatus('Coompleted');
+      setSelectedPaymentStatus('Completed');
       setSelectedPaymentMethod('Online');
     }
   };

@@ -159,6 +159,10 @@ export const SELECT_LEVEL = {
         Failed: 'Failed',
   }
 
+  export const INVOICE_TEXT = {
+    Invoice: 'INVOICE',
+    Stripe: 'Stripe',
+  }
 
 
   
