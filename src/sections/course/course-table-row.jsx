@@ -58,7 +58,7 @@ export default function UserTableRow({
           <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
         </TableCell>
         <TableCell>
-          <Label color={(type === 'offline' && 'error') || 'success'}>{type}</Label>
+          <Label color={(type === 'Offline' && 'error') || 'success'}>{type}</Label>
         </TableCell>
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>

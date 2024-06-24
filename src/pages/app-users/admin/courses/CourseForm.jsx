@@ -31,6 +31,7 @@ const StyledDatePicker = styled(DatePicker)(() => ({
 }));
 
 // CourseForm Component
+
 export default function CourseForm({ isEdit, data }) {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -43,15 +44,9 @@ export default function CourseForm({ isEdit, data }) {
     description: Yup.string().required('Description is required').max(500, 'Description must not exceed 500 characters'),
     fees: Yup.string()
     .required('Fees are required')
-    .test('is-number', 'Fees must be a number', value => {
-      if (!value) return true; // Allow empty value (handled by 'required')
-      return /^\d+(\.\d+)?$/.test(value); // Match numbers with optional decimal
-    }),
-  discount_fees: Yup.string()
-    .test('is-number', 'Discount fees must be a number', value => {
-      if (!value) return true; // Allow empty value
-      return /^\d+(\.\d+)?$/.test(value); // Match numbers with optional decimal
-    }),
+    .matches(/^\d+(\.\d+)?$/, 'Fees must be a number'),
+    discount_fees: Yup.string()
+    .matches(/^\d+(\.\d+)?$/, 'Discount fees must be a number'),
     duration: Yup.number().typeError('Duration must be a number'),
     start_date: Yup.string().required('Start date is required'),
     end_date: Yup.string().required('End date is required'),
