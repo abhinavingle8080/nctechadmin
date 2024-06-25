@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-
 import { Grid } from '@mui/material';
 
 const styles = {
@@ -26,20 +25,16 @@ function CourseDetails({ course }) {
       value: course.course_name ? course.course_name : 'N/A',
     },
     {
-      label: 'Description',
-      value: course.description ? course.description : 'N/A',
+      label: 'Duration (days)',
+      value: course.duration ? `${course.duration} days` : 'N/A',
     },
     {
       label: 'Fees',
-      value: course.fees ? `$${parseInt(course.fees, 10).toFixed(2)}` : 'N/A',
+      value: course.fees ? `${parseInt(course.fees, 10).toFixed(2)}` : 'N/A',
     },
     {
       label: 'Discount Fees',
-      value: course?.discount_fees ? `$${parseInt(course?.discount_fees, 10)?.toFixed(2)}` : 'N/A',
-    },
-    {
-      label: 'Duration (days)',
-      value: course.duration ? `${course.duration} days` : 'N/A',
+      value: course?.discount_fees ? `${parseInt(course?.discount_fees, 10)?.toFixed(2)}` : 'N/A',
     },
     {
       label: 'Start Date',
@@ -63,7 +58,12 @@ function CourseDetails({ course }) {
     },
     {
       label: 'Type',
-      value: course ? course.type: 'N/A',
+      value: course ? course.type : 'N/A',
+    },
+    {
+      label: 'Description',
+      value: course.description ? course.description : 'N/A',
+      isDescription: true, // Add a flag to identify the description field
     },
   ];
 
@@ -73,18 +73,18 @@ function CourseDetails({ course }) {
         <Grid
           item
           xs={12}
-          md={6}
+          md={item.isDescription ? 12 : 6} // Allocate full width for description
           style={{
             ...styles.gridItem,
-            ...(dummyData.length === 2 ? styles.noBorderBottom : {}),
+            ...(index === dummyData.length - 1 ? styles.noBorderBottom : {}),
           }}
           key={index}
         >
           <Grid container spacing={3} margin={0} width="100%">
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={item.isDescription ? 2 : 4}>
               <h4 style={{ fontSize: '16px' }}>{item.label}</h4>
             </Grid>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={item.isDescription ? 10 : 8}>
               <p>{item.value}</p>
             </Grid>
           </Grid>

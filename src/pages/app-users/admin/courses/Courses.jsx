@@ -196,8 +196,8 @@ export default function Courses() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'course_name', label: 'Course Name' },
-                  { id: 'description', label: 'Description' },
-                  { id: 'fees', label: 'Fees' },
+                  { id: 'duration', label: 'Duration' },
+                  { id: 'discount_fees', label: 'Discount Fees' },
                   { id: 'date', label: 'Date', align: 'center' },
                   { id: 'status', label: 'Status' },
                   { id: 'type', label: 'Type' },
@@ -209,8 +209,8 @@ export default function Courses() {
                   <CourseTableRow
                     key={row.id}
                     name={row.course_name}
-                    description={row.description}
-                    fees={row.fees}
+                    duration={row.duration}
+                    fees={row.discount_fees}
                     date={moment(row.date).format('DD/MM/YYYY')}
                     status={row.status}
                     type={row.type}

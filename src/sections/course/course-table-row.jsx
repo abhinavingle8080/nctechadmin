@@ -19,7 +19,7 @@ export default function UserTableRow({
   name,
   email,
   course,
-  description,
+  duration,
   fees,
   date,
   paymentAmount,
@@ -51,14 +51,14 @@ export default function UserTableRow({
             {name}
           </Typography>
         </TableCell>
-        <TableCell>{course} {description}</TableCell>
+        <TableCell>{course} {duration}</TableCell>
         <TableCell>{fees}</TableCell>
         <TableCell>{paymentAmount} {date}</TableCell>
         <TableCell>
           <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
         </TableCell>
         <TableCell>
-          <Label color={(type === 'Offline' && 'error') || 'success'}>{type}</Label>
+        <Label color={(type === 'Offline' && 'warning') || 'success'}>{type}</Label>
         </TableCell>
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
@@ -109,7 +109,7 @@ UserTableRow.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string,
   course: PropTypes.string,
-  description: PropTypes.string,
+  duration: PropTypes.string,
   fees: PropTypes.number.isRequired,
   date: PropTypes.string,
   paymentAmount: PropTypes.number,
