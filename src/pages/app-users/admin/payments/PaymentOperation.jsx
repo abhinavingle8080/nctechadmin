@@ -101,7 +101,7 @@ export default function PaymentOperation() {
         />
         {
           isView ? (
-            <Button variant="contained" to="/admin/payments/add" component={RouterLink} color="inherit"
+            <Button variant="contained" component={RouterLink} color="inherit"
              onClick={() => handleDownload(data?.invoice_url)}>
             Download Invoice
           </Button>

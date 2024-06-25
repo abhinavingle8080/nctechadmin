@@ -41,10 +41,16 @@ export default function Payments() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [count, setCount] = useState(0);
   const [payments, setPayments] = useState([]);
+
+  
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
   const [payload, setPayload] = useState({
     page: 1,
     limit: 5,
     search: '',
+    from_date: null, 
+    to_date: null,
   });
 
   useEffect(() => {
@@ -159,6 +165,30 @@ export default function Payments() {
     });
   };
 
+  const handleFromDateChange = (date) => {
+    console.log('date', date);
+    const dateObj = new Date(date);
+    const formattedDate = moment(dateObj).format('YYYY-MM-DD');
+    setFromDate(date);
+    setPayload({
+      ...payload,
+      page: 1,
+      from_date: formattedDate,
+    });
+  };
+
+  const handleToDateChange = (date) => {
+    console.log('date', date);
+    const dateObj = new Date(date);
+    const formattedDate = moment(dateObj).format('YYYY-MM-DD');
+    setToDate(date);
+    setPayload({
+      ...payload,
+      page: 1,
+      to_date: formattedDate,
+    });
+  };
+
   const notFound = !dataFiltered.length && payload.search;
 
   return (
@@ -188,6 +218,12 @@ export default function Payments() {
           numSelected={selected.length}
           filterName={payload.search}
           onFilterName={handleFilterByName}
+         
+          fromDate={fromDate}
+          toDate={toDate}
+          onFromDateChange={handleFromDateChange}
+          onToDateChange={handleToDateChange}
+
         />
 
         <Scrollbar>
