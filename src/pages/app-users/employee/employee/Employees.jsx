@@ -21,8 +21,8 @@ import Swal from 'sweetalert2';
 import { getEmployeesApi, deleteEmployeeApi } from 'src/apis/admin/employee/EmployeeApis';
 
 // Components
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from 'src/components/Iconify';
+import Scrollbar from 'src/components/Scrollbar';
 
 import TableNoData from '../../../../sections/user/table-no-data';
 import UserTableRow from '../../../../sections/user/user-table-row';

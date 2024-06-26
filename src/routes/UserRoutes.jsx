@@ -1,7 +1,7 @@
 import React, { lazy,  Suspense, useEffect, } from "react";
 import { Outlet, Navigate, useNavigate, useLocation } from "react-router-dom";
 
-import DashboardLayout from 'src/layouts/userdashboard';
+import DashboardLayout from 'src/layouts/dashboard';
 
 // guards
 import EmployeeAuthGuard from '../guards/EmployeeAuthGuard';

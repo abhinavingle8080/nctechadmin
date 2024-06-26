@@ -10,7 +10,7 @@ import CourseDetails from './CourseDetails'; // Adjust import path as per your p
 
 // components
 import Page from '../../../../../components/Page';
-import Iconify from '../../../../../components/iconify';
+import Iconify from '../../../../../components/Iconify';
 
 // hooks
 import useSettings from '../../../../../hooks/useSettings';

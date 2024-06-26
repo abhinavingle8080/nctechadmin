@@ -7,7 +7,7 @@ import { Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import Image from '../Image';
-import Iconify from '../iconify/iconify';
+import Iconify from '../Iconify';
 import RejectionFiles from './RejectionFiles';
 
 // ----------------------------------------------------------------------

@@ -9,7 +9,7 @@ import { Tab, Box, Tabs, Card, Container } from '@mui/material';
 import NoticeDetails from './NoticeDetails'; // Assuming you have a NoticeDetails component
 // components
 import Page from '../../../../../components/Page';
-import Iconify from '../../../../../components/iconify';
+import Iconify from '../../../../../components/Iconify';
 // hooks
 import useSettings from '../../../../../hooks/useSettings';
 

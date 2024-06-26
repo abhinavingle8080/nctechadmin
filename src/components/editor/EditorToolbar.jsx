@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Quill } from 'react-quill';
 
 // components
-import Iconify from '../iconify/iconify';
+import Iconify from '../Iconify';
 //
 import EditorToolbarStyle from './EditorToolbarStyle';
 

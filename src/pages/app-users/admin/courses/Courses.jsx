@@ -19,8 +19,8 @@ import Swal from 'sweetalert2';
 import { getCoursesApi, deleteCourseApi } from 'src/apis/admin/course/CourseApis';
 
 // Components
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from 'src/components/Iconify';
+import Scrollbar from 'src/components/Scrollbar';
 
 import TableNoData from 'src/sections/course/table-no-data';
 import CourseTableRow from 'src/sections/course/course-table-row';

@@ -20,8 +20,8 @@ import Swal from 'sweetalert2';
 import { getLeavesApi, deleteLeaveApi } from 'src/apis/user/leave/LeaveApis';
 
 // Components
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from 'src/components/Iconify';
+import Scrollbar from 'src/components/Scrollbar';
 
 import TableNoData from '../../../../sections/leave/table-no-data';
 import LeaveTableRow from '../../../../sections/leave/leave-table-row';

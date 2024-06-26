@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { fDate } from 'src/utils/format-time';
 import { fShortenNumber } from 'src/utils/format-number';
 
-import Iconify from 'src/components/iconify';
+import Iconify from 'src/components/Iconify';
 import SvgColor from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------

@@ -5,7 +5,7 @@ import { SnackbarProvider } from 'notistack';
 import { useTheme } from '@mui/material/styles';
 import { Box, GlobalStyles } from '@mui/material';
 
-import Iconify from './iconify';
+import Iconify from './Iconify';
 import { IconButtonAnimate } from './animate';
 
 // ----------------------------------------------------------------------

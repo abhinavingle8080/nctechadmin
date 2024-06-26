@@ -9,7 +9,7 @@ import { Tab, Box, Tabs, Card, Container } from '@mui/material';
 import TeamDetails from './TeamDetails'; // Adjusted import for team details
 // components
 import Page from '../../../../../components/Page';
-import Iconify from '../../../../../components/iconify';
+import Iconify from '../../../../../components/Iconify';
 // hooks
 import useSettings from '../../../../../hooks/useSettings';
 

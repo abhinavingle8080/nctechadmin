@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 
 import { posts } from 'src/_mock/blog';
 
-import Iconify from 'src/components/iconify';
+import Iconify from 'src/components/Iconify';
 
 import PostCard from '../post-card';
 import PostSort from '../post-sort';

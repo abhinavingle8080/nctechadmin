@@ -14,8 +14,8 @@ import TablePagination from '@mui/material/TablePagination';
 
 import Swal from 'sweetalert2';
 
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from 'src/components/Iconify';
+import Scrollbar from 'src/components/Scrollbar';
 
 // Adjusted imports based on your environment
 

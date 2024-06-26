@@ -16,7 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';  // Use DatePicker from MUI
 import dayjs from 'dayjs';
 
-import Iconify from 'src/components/iconify';
+import Iconify from 'src/components/Iconify';
 
 // ----------------------------------------------------------------------
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@mui/styles';
 import { Box, Button, TextField, IconButton, } from '@mui/material';
 
-import Iconify from '../iconify/iconify';
+import Iconify from '../Iconify';
 
 /* eslint-disable */
 const useStyles = makeStyles((theme) => ({

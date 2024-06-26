@@ -8,7 +8,7 @@ import { List, Stack, Button, ListItem, IconButton,  ListItemText } from '@mui/m
 
 // utils
 import Image from '../Image';
-import Iconify from '../iconify/iconify';
+import Iconify from '../Iconify';
 import { fData } from '../../utils/formatNumber';
 
 // ----------------------------------------------------------------------

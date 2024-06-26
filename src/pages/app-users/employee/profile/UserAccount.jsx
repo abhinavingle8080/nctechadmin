@@ -5,7 +5,7 @@ import { Tab,  Box, Tabs, Container } from '@mui/material';
 
 // components
 import Page from '../../../../components/Page';
-import Iconify from '../../../../components/iconify';
+import Iconify from '../../../../components/Iconify';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 // sections
 import {

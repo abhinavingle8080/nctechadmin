@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {Card,Stack, Table, Button, Container, TableBody, Typography,    TableContainer, TablePagination } from '@mui/material';
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from 'src/components/Iconify';
+import Scrollbar from 'src/components/Scrollbar';
 
 import { users } from 'src/_mock/user';
 

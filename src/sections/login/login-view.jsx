@@ -19,7 +19,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/Logo';
-import Iconify from 'src/components/iconify';
+import Iconify from 'src/components/Iconify';
 
 import useAuth from '../../hooks/useAuth';
 import useIsMountedRef from '../../hooks/useIsMountedRef';

@@ -9,7 +9,7 @@ import { Tab, Box, Tabs, Card, Container } from '@mui/material';
 import DesignationDetails from './DesignationDetails';
 // components
 import Page from '../../../../../components/Page';
-import Iconify from '../../../../../components/iconify';
+import Iconify from '../../../../../components/Iconify';
 // hooks
 import useSettings from '../../../../../hooks/useSettings';
 

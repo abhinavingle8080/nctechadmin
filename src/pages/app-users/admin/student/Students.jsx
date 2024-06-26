@@ -21,8 +21,8 @@ import Swal from 'sweetalert2';
 import { getStudentsApi, deleteStudentApi } from 'src/apis/admin/student/StudentApis';
 
 // Components
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from 'src/components/Iconify';
+import Scrollbar from 'src/components/Scrollbar';
 
 import TableNoData from '../../../../sections/student/table-no-data';
 import UserTableRow from '../../../../sections/student/student-table-row';

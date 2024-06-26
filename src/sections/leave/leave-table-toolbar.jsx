@@ -10,7 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
-import Iconify from 'src/components/iconify';
+import Iconify from 'src/components/Iconify';
 
 export default function LeaveTableToolbar({ numSelected, filterName, onFilterName,statusFilterValue, onStatusFilterChange }) {
   const [payload, setPayload] = useState({ status: '' });

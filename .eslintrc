@@ -4,16 +4,8 @@
     "browser": true,
     "es2021": true
   },
-  "plugins": [
-    "perfectionist",
-    "unused-imports",
-    "prettier"
-  ],
-  "extends": [
-    "airbnb",
-    "airbnb/hooks",
-    "prettier"
-  ],
+  "plugins": ["perfectionist", "unused-imports", "prettier"],
+  "extends": ["airbnb", "airbnb/hooks", "prettier"],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
@@ -27,17 +19,8 @@
     },
     "import/resolver": {
       "alias": {
-        "map": [
-          [
-            "src",
-            "./src"
-          ]
-        ],
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".json"
-        ]
+        "map": [["src", "./src"]],
+        "extensions": [".js", ".jsx", ".json"]
       }
     }
   },
@@ -64,6 +47,8 @@
     "react/function-component-definition": 0,
     "jsx-a11y/control-has-associated-label": 0,
     "import/no-extraneous-dependencies": 0,
+    "react/jsx-curly-brace-presence": 0,
+    "perfectionist/sort-named-imports": 0,
     "import/no-unresolved": [
       2,
       {
@@ -110,13 +95,6 @@
     ],
     // perfectionist
     // https://eslint-plugin-perfectionist.azat.io/
-    "perfectionist/sort-named-imports": [
-      1,
-      {
-        "order": "asc",
-        "type": "line-length"
-      }
-    ],
     "perfectionist/sort-named-exports": [
       1,
       {

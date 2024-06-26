@@ -21,8 +21,8 @@ import Swal from 'sweetalert2';
 import { getPaymentsApi, deletePaymentApi } from 'src/apis/admin/payment/PaymentsApis';
 
 // Components
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from 'src/components/Iconify';
+import Scrollbar from 'src/components/Scrollbar';
 import TableNoData from '../../../../sections/payments/table-no-data';
 import TableEmptyRows from '../../../../sections/payments/table-empty-rows';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';

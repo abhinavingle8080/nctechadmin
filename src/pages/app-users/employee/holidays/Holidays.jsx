@@ -20,8 +20,8 @@ import Swal from 'sweetalert2';
 import { getHolidaysApi, deleteHolidayApi } from 'src/apis/admin/holiday/HolidayApis';
 
 // Components
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from 'src/components/Iconify';
+import Scrollbar from 'src/components/Scrollbar';
 
 import TableNoData from '../../../../sections/employee/holiday/table-no-data';
 import HolidayTableRow from '../../../../sections/employee/holiday/holiday-table-row';

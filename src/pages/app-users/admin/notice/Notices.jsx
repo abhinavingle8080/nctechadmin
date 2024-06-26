@@ -19,7 +19,7 @@ import Swal from 'sweetalert2';
 // apis
 // Assuming you have APIs for fetching and deleting notices
 import { getNoticesApi, deleteNoticeApi } from 'src/apis/admin/notice/NoticeApis';
-import Iconify from 'src/components/iconify';
+import Iconify from 'src/components/Iconify';
 
 // Components
 // Assuming you have components like NoticeTableRow, NoticeTableHead, NoticeTableToolbar, etc.

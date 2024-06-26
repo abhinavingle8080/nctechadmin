@@ -15,8 +15,8 @@ import TablePagination from '@mui/material/TablePagination';
 import Swal from 'sweetalert2';
 
 
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from 'src/components/Iconify';
+import Scrollbar from 'src/components/Scrollbar';
 
 import { getDesignationsApi, deleteDesignationApi } from '../../../../apis/admin/designation/DesignationApis';
 
