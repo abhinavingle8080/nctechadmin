@@ -65,6 +65,22 @@ export default function DashboardPage() {
             icon={<img alt="icon" src="/assets/icons/glass/cake.png" />}
           />
         </Grid>
+        <Grid xs={12} sm={6} md={3}>
+          <AppWidgetSummary
+            title="Batches"
+            total={dashboardData?.recentBirthdays?.length}
+            color="error"
+            icon={<img alt="icon" src="/assets/icons/glass/batch-icon.png" />}
+          />
+        </Grid>
+        <Grid xs={12} sm={6} md={3}>
+          <AppWidgetSummary
+            title="Total Students"
+            total={dashboardData?.recentBirthdays?.length}
+            color="error"
+            icon={<img alt="icon" src="/assets/icons/glass/student_icon.svg" />}
+          />
+        </Grid>
 
         <Grid item xs={6} md={6} lg={6}>
           <Card style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>

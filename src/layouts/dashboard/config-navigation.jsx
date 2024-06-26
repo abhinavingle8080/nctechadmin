@@ -34,6 +34,16 @@ const navConfig = [
   path: '/admin/payments',
   icon: icon('ic_blog'),
 },
+
+{
+  title: 'Batch',
+  path: '/admin/batch',
+  icon: icon('ic_blog'),
+}
+
+
+
+
 ];
 
 export default navConfig;

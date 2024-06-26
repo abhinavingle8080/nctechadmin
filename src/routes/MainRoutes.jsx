@@ -53,6 +53,12 @@ export const Payment = lazy(() => import('src/pages/app-users/admin/payments/Pay
 export const PaymentOperation = lazy(() =>
   import('src/pages/app-users/admin/payments/PaymentOperation')
 );
+
+export const Batch = lazy(() => import('src/pages/app-users/admin/batches/Batch'));
+export const Batches = lazy(() =>
+  import('src/pages/app-users/admin/batches/Batches')
+);
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -120,6 +126,11 @@ const MainRoutes = {
         { path: 'payments/:id/view', element: <PaymentOperation /> },
         { path: 'payments/:id/edit', element: <PaymentOperation /> },
         { path: 'payments/add', element: <PaymentOperation/> },
+
+        { path: 'batch', element: <Batches /> },
+        
+
+
       ],
     },
   ],
