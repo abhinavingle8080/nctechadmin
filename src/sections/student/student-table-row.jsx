@@ -17,11 +17,11 @@ import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function StudentTableRow({
+export default function UserTableRow({
   selected,
   name,
   avatarUrl,
-  email,
+
   course,
 
   status,
@@ -58,7 +58,7 @@ export default function StudentTableRow({
             </Typography>
           </Stack>
         </TableCell>
-        <TableCell>{course}</TableCell>
+        <TableCell>{course.course_name}</TableCell>
 
         <TableCell>{phone_no}</TableCell>
 
@@ -111,11 +111,11 @@ export default function StudentTableRow({
   );
 }
 
-StudentTableRow.propTypes = {
+UserTableRow.propTypes = {
   avatarUrl: PropTypes.any,
-  email: PropTypes.any,
   handleClick: PropTypes.func,
   name: PropTypes.any,
+  course: PropTypes.any,
   birth_date: PropTypes.any,
   country_code: PropTypes.any,
   phone_no: PropTypes.any,
@@ -124,5 +124,4 @@ StudentTableRow.propTypes = {
   onView: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
-  course: PropTypes.any
 };
