@@ -124,7 +124,7 @@ export default function Students() {
     });
   };
 
-  const handleFilterByEmail = (event) => {
+  const handleFilterByName = (event) => {
     setPayload({
       ...payload,
       page: 1,
@@ -195,8 +195,8 @@ export default function Students() {
       <Card>
         <UserTableToolbar
           numSelected={selected.length}
-          filterEmail={payload.search}
-          onFilterEmail={handleFilterByEmail}
+          filterName={payload.search}
+          onFilterName={handleFilterByName}
         />
 
         <Scrollbar>
@@ -211,7 +211,7 @@ export default function Students() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Student Name' },
-                  { id: 'course_id', label: 'Course Name'},
+                  { id: 'course', label: 'Course' },
                   { id: 'phone_no', label: 'Phone No' }, // Updated label
                   { id: 'status', label: 'Status' },
                   { id: 'action', label: 'Action', align: 'center' },
@@ -222,6 +222,7 @@ export default function Students() {
                   <UserTableRow
                     key={row.id}
                     name={`${row.first_name} ${row.last_name}`}
+                    course={row.course}
                     phone_no={`${row.country_code} ${row.phone_no}`} // Concatenated country code and phone number
                     status={row.status}
                     selected={selected.indexOf(row.email) !== -1}
