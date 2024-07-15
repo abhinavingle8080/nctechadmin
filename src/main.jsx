@@ -12,7 +12,6 @@ import { store, persistor } from './redux/store';
 
 import App from './app';
 import { AuthProvider } from './contexts/JWTContext';
-import { store, persistor } from './redux/store'; // Import your store and persistor
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

@@ -10,7 +10,7 @@ import { PATH_AUTH } from '../../../routes/paths';
 import useAuth from '../../../hooks/useAuth';
 import useIsMountedRef from '../../../hooks/useIsMountedRef';
 import { useDispatch } from '../../../redux/store';
-import { ResetRoleAccess } from '../../../redux/slices/roleaccess';
+import { resetRoleAccess } from '../../../redux/slices/roleaccess';
 // components
 import MyAvatar from '../../../components/MyAvatar';
 import MenuPopover from '../../../components/MenuPopover';
@@ -54,7 +54,7 @@ export default function AccountPopover() {
     const handleLogout = async () => {
         try {
             await logout();
-            dispatch(ResetRoleAccess());
+            dispatch(resetRoleAccess());
             navigate(PATH_AUTH.login, { replace: true });
 
             if (isMountedRef.current) {

@@ -31,8 +31,8 @@ import Swal from 'sweetalert2';
 // import UserTableRow from 'src/sections/user/user-table-row';
 // import { getBatchesApi, deleteBatchApi } from '../../../../apis/admin/batch/BatchesApis';
 // Components
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from 'src/components/Iconify';
+import Scrollbar from 'src/components/Scrollbar';
 import TableNoData from 'src/sections/user/table-no-data';
 import TableEmptyRows from 'src/sections/user/table-empty-rows';
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs';
