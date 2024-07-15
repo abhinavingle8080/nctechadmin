@@ -22,6 +22,7 @@ import CourseSelect from 'src/components/select/CourseSelect';
 import { FormBox, FormBottomButton } from '../../../../sections/@dashboard/user/form';
 import { RHFSelect, RHFTextField, FormProvider } from '../../../../components/hook-form';
 import { createPaymentApi, updatePaymentApi } from '../../../../apis/admin/payment/PaymentsApis';
+import  useAuth  from '../../../../hooks/useAuth';
 
 
 // ----------------------------------------------------------------------
@@ -51,6 +52,8 @@ const PAYMENT_METHOD = {
 
 export default function PaymentForm({ isEdit, data }) {
   const navigate = useNavigate(); // Define the navigate function
+  const { user, logout } = useAuth();
+
   const { enqueueSnackbar } = useSnackbar();
   const [dueAmount, setDueAmount] = useState(0);
   const [selectedPaymentStatus, setSelectedPaymentStatus] = useState('Completed');
@@ -201,6 +204,7 @@ export default function PaymentForm({ isEdit, data }) {
             <Typography sx={{ p: 2 }} color="#FF4842" fontSize={13}>
               All fields marked with * are mandatory
             </Typography>
+            <Typography>  {user.first_name}  </Typography> 
             <form noValidate>
               <FormBox>
                 <StudentSelect

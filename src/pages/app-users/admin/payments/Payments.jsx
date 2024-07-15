@@ -10,12 +10,15 @@ import {
   Table,
   Button,
   Container,
-  TableBody,
+  TableBody,  Typography,
   TableContainer,
   TablePagination,
+
+
 } from '@mui/material';
 
 import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 
 // apis
 import { getPaymentsApi, deletePaymentApi } from 'src/apis/admin/payment/PaymentsApis';
@@ -30,8 +33,11 @@ import UserTableToolbar from '../../../../sections/payments/payment-table-toolba
 import { emptyRows, applyFilter, getComparator } from '../../../../sections/user/utils';
 import UserTableHead from '../../../../sections/payments/payment-table-head';
 import UserTableRow from '../../../../sections/payments/payment-table-row';
+import { store } from '../../../../redux/store';
+import useAuth from '../../../../hooks/useAuth';
 
 export default function Payments() {
+  const { user, logout } = useAuth();
   const theme = useTheme();
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
@@ -42,14 +48,15 @@ export default function Payments() {
   const [count, setCount] = useState(0);
   const [payments, setPayments] = useState([]);
 
-  
+  const usersName = useSelector((name) => store.users?.name);
+
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
   const [payload, setPayload] = useState({
     page: 1,
     limit: 5,
     search: '',
-    from_date: null, 
+    from_date: null,
     to_date: null,
   });
 
@@ -200,6 +207,7 @@ export default function Payments() {
             { name: 'Dashboard', href: '/admin/dashboard' },
             { name: 'Payment', href: '/admin/payments' },
             { name: 'Payment List' },
+
           ]}
         />
         <Button
@@ -209,8 +217,10 @@ export default function Payments() {
           color="inherit"
           startIcon={<Iconify icon="eva:plus-fill" />}
         >
-          New Payment
+          New Payment 
         </Button>
+        <Typography>  {user.first_name}  </Typography> 
+
       </Stack>
 
       <Card>
@@ -218,7 +228,7 @@ export default function Payments() {
           numSelected={selected.length}
           filterName={payload.search}
           onFilterName={handleFilterByName}
-         
+
           fromDate={fromDate}
           toDate={toDate}
           onFromDateChange={handleFromDateChange}

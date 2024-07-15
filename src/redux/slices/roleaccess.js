@@ -1,13 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { getMenuApi } from '../../apis/Menu/MenuApi';
-// import { getRoleModulesByRolesApi } from '../../apis/RoleModule/RoleModuleApis';
 
 const initialState = {
     rolepermissions: [],
     rolemodules: [],
 };
 
-const slice = createSlice({
+const roleAccessSlice = createSlice({
     name: 'roleaccess',
     initialState,
     reducers: {
@@ -23,74 +21,71 @@ const slice = createSlice({
         updateRoleModulesSuccess(state, action) {
             state.rolemodules = action.payload;
         },
-        resetRoleAccess() {
-            return initialState;
+        resetRoleAccess(state) {
+            Object.assign(state, initialState);
         },
     },
 });
 
-export default slice.reducer;
+export default roleAccessSlice.reducer;
 
-// ----------------------------------------------------------------------
+// Action creators
+export const fetchRolePermissions = (roleId) => async (dispatch, getState) => {
+    const { roleaccess } = getState();
 
-export function GetRolePermissions(roleId) {
-    return async (dispatch, getState) => {
-        const { roleaccess } = getState();
+    if (roleaccess.rolepermissions.length > 0) {
+        return;
+    }
 
-        if (roleaccess.rolepermissions.length > 0) {
-            return;
-        }
+    try {
+        // Uncomment and modify as per your API response structure
+        // const res = await getRoleModulesByRolesApi({ role_id: roleId });
+        // dispatch(roleAccessSlice.actions.getRolePermissionsSuccess(res?.data?.modules));
+    } catch (error) {
+        console.log(error);
+        // Handle errors here, dispatch an error action or show a notification
+    }
+};
 
-        try {
-            // const res = await getRoleModulesByRolesApi({ role_id: roleId });
-            // dispatch(slice.actions.getRolePermissionsSuccess(res?.data?.modules));
-        } catch (error) {
-            console.log(error);
-        }
-    };
-}
+export const fetchRoleModules = () => async (dispatch, getState) => {
+    const { roleaccess } = getState();
 
-export function GetRoleModules() {
-    return async (dispatch, getState) => {
-        const { roleaccess } = getState();
+    if (roleaccess.rolemodules.length > 0) {
+        return;
+    }
 
-        if (roleaccess.rolemodules.length > 0) {
-            return;
-        }
+    try {
+        // Uncomment and modify as per your API response structure
+        // const res = await getMenuApi();
+        // dispatch(roleAccessSlice.actions.getRoleModulesSuccess(res?.data?.data));
+    } catch (error) {
+        console.log(error);
+        // Handle errors here, dispatch an error action or show a notification
+    }
+};
 
-        try {
-            // const res = await getMenuApi();
-            // dispatch(slice.actions.getRoleModulesSuccess(res?.data?.data));
-        } catch (error) {
-            console.log(error);
-        }
-    };
-}
+export const updateRolePermissions = (roleId) => async (dispatch) => {
+    try {
+        // Uncomment and modify as per your API response structure
+        // const res = await getRoleModulesByRolesApi({ role_id: roleId });
+        // dispatch(roleAccessSlice.actions.getRolePermissionsSuccess(res?.data?.modules));
+    } catch (error) {
+        console.log(error);
+        // Handle errors here, dispatch an error action or show a notification
+    }
+};
 
-export function UpdateRolePermissions(roleId) {
-    return async (dispatch) => {
-        try {
-            // const res = await getRoleModulesByRolesApi({ role_id: roleId });
-            // dispatch(slice.actions.getRolePermissionsSuccess(res?.data?.modules));
-        } catch (error) {
-            console.log(error);
-        }
-    };
-}
+export const updateRoleModules = () => async (dispatch) => {
+    try {
+        // Uncomment and modify as per your API response structure
+        // const res = await getMenuApi();
+        // dispatch(roleAccessSlice.actions.getRoleModulesSuccess(res?.data?.data));
+    } catch (error) {
+        console.log(error);
+        // Handle errors here, dispatch an error action or show a notification
+    }
+};
 
-export function UpdateRoleModules() {
-    return async (dispatch) => {
-        try {
-            // const res = await getMenuApi();
-            // dispatch(slice.actions.getRoleModulesSuccess(res?.data?.data));
-        } catch (error) {
-            console.log(error);
-        }
-    };
-}
-
-export function ResetRoleAccess() {
-    return async (dispatch) => {
-        dispatch(slice.actions.resetRoleAccess());
-    };
+export const resetRoleAccess = () => async (dispatch) => {
+    dispatch(roleAccessSlice.actions.resetRoleAccess());
 };
